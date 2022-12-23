@@ -1,0 +1,173 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Kodchasan-Bold.ttf",
+      "sha1": "2f11b3863d6ca19a474338b4dd2ce7063f3eb145"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-BoldItalic.ttf",
+      "sha1": "3dd726959e87e2101d25e95554696b2713d8c76d"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-ExtraLight.ttf",
+      "sha1": "2450181c067da9739c3e951f9f49021ba6798f45"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-ExtraLightItalic.ttf",
+      "sha1": "fbdd4c4826d06a5c2712403597b5cb2f27a878b1"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-Italic.ttf",
+      "sha1": "8428946938a71742b71c2520dc589e8bf5cbcb56"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-Light.ttf",
+      "sha1": "6aa6c928a7c32ae1c9528e90ecd19528c3191a73"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-LightItalic.ttf",
+      "sha1": "bf87e1625197b19f6f4f92ba45221fd7c53a4c15"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-Medium.ttf",
+      "sha1": "cef78e1ec8da0a554174a7d00bbdc74194b5c324"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-MediumItalic.ttf",
+      "sha1": "61bd2eb3dc162503941e8c15c29d2c93f2962bce"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-Regular.ttf",
+      "sha1": "eb34dcf0c43dc83449a196d14ef6dd4ec858119d"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-SemiBold.ttf",
+      "sha1": "69a203c7351fc672881c07ba5b3b9ff52b3826fc"
+    },
+    {
+      "path": "assets/fonts/Kodchasan-SemiBoldItalic.ttf",
+      "sha1": "92b1f69a3bdc414fbc1e3d000e63321edb48f310"
+    },
+    {
+      "path": "assets/fonts/Mali-Bold.ttf",
+      "sha1": "1943e5f61e5aed73a55925db23d0d5b641c2a504"
+    },
+    {
+      "path": "assets/fonts/Mali-BoldItalic.ttf",
+      "sha1": "b0e2e3abf591153e714394682f2f2a2bd58ca1b7"
+    },
+    {
+      "path": "assets/fonts/Mali-ExtraLight.ttf",
+      "sha1": "84876daab5c1914b3775274e5e0af268d3ff3547"
+    },
+    {
+      "path": "assets/fonts/Mali-ExtraLightItalic.ttf",
+      "sha1": "d3d8efc33390c992937d79192de061ae5bc23565"
+    },
+    {
+      "path": "assets/fonts/Mali-Italic.ttf",
+      "sha1": "bbd453eb665c9606d1f0fa11ed7f4600899b0555"
+    },
+    {
+      "path": "assets/fonts/Mali-Light.ttf",
+      "sha1": "340f2799d47c1fe84eee321defff07149573ddac"
+    },
+    {
+      "path": "assets/fonts/Mali-LightItalic.ttf",
+      "sha1": "3d5455d860973c0b241caac329826384401a4396"
+    },
+    {
+      "path": "assets/fonts/Mali-Medium.ttf",
+      "sha1": "167c5b9dd18d94b8d4fde98b4adf40c7b01c6e06"
+    },
+    {
+      "path": "assets/fonts/Mali-MediumItalic.ttf",
+      "sha1": "17b5f2f4bbbdd86588df180739f946e0f28be058"
+    },
+    {
+      "path": "assets/fonts/Mali-Regular.ttf",
+      "sha1": "0d69218429954ab53a0cc47ff9d99e9eb28201c4"
+    },
+    {
+      "path": "assets/fonts/Mali-SemiBold.ttf",
+      "sha1": "77238dca28a266a72648f40420d03066a364c049"
+    },
+    {
+      "path": "assets/fonts/Mali-SemiBoldItalic.ttf",
+      "sha1": "fd85e976baa2dae3aef13223af160737cef62e0a"
+    },
+    {
+      "path": "assets/fonts/Roboto-Black.ttf",
+      "sha1": "14701060227dbc4a4ec9901970e8a58bb136efd9"
+    },
+    {
+      "path": "assets/fonts/Roboto-BlackItalic.ttf",
+      "sha1": "3009f8bc7f3aa84fd483469422442cc3789e0579"
+    },
+    {
+      "path": "assets/fonts/Roboto-Bold.ttf",
+      "sha1": "6cbb57ba2355cf442e06899898ff5af55867103e"
+    },
+    {
+      "path": "assets/fonts/Roboto-BoldItalic.ttf",
+      "sha1": "cd6a28033099099036e2a2182c9c4475394deaad"
+    },
+    {
+      "path": "assets/fonts/Roboto-Italic.ttf",
+      "sha1": "4c4faf7a3fae4d0b1474561f0080995d358861ac"
+    },
+    {
+      "path": "assets/fonts/Roboto-Light.ttf",
+      "sha1": "191dda7a5142990cd980727d43b27e4802f0b321"
+    },
+    {
+      "path": "assets/fonts/Roboto-LightItalic.ttf",
+      "sha1": "693445f41eaa750b789a77568f9d6d995e85e0b2"
+    },
+    {
+      "path": "assets/fonts/Roboto-Medium.ttf",
+      "sha1": "adbc3bde424bcf7dbc38f148005c8319825891f2"
+    },
+    {
+      "path": "assets/fonts/Roboto-MediumItalic.ttf",
+      "sha1": "75feb92a7fc61d00e8ca610a700344738ef5ae32"
+    },
+    {
+      "path": "assets/fonts/Roboto-Regular.ttf",
+      "sha1": "1d1d41fcadc571decb6444211b7993b99ce926e2"
+    },
+    {
+      "path": "assets/fonts/Roboto-Thin.ttf",
+      "sha1": "f71ccd563f95ccc187cf4fe81287445e91f7121b"
+    },
+    {
+      "path": "assets/fonts/Roboto-ThinItalic.ttf",
+      "sha1": "e3fb2b2a0dc2daf84d79cfff4b345a2afac132bc"
+    },
+    {
+      "path": "assets/fonts/RobotoCondensed-Bold.ttf",
+      "sha1": "c348d9f1b95e103ac2d14d56682867368f385b1a"
+    },
+    {
+      "path": "assets/fonts/RobotoCondensed-BoldItalic.ttf",
+      "sha1": "3bd9f2b8c65c4dd80f535b9ddd937784e0d71ce6"
+    },
+    {
+      "path": "assets/fonts/RobotoCondensed-Italic.ttf",
+      "sha1": "394439fa97f36bba80f061e32e46ead1650e798e"
+    },
+    {
+      "path": "assets/fonts/RobotoCondensed-Light.ttf",
+      "sha1": "df222c27b5e41dc89ca76a4479c9dd3ae6c1acbc"
+    },
+    {
+      "path": "assets/fonts/RobotoCondensed-LightItalic.ttf",
+      "sha1": "d974583f3217141e4fc04bf94c3c6f94d9f56f8f"
+    },
+    {
+      "path": "assets/fonts/RobotoCondensed-Regular.ttf",
+      "sha1": "c722696501a8663d64208d754e4db8165d3936f6"
+    }
+  ]
+}
