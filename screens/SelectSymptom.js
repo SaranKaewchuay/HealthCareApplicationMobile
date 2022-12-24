@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -12,28 +12,28 @@ import {
   Button,
 } from 'react-native';
 
-import {Center, NativeBaseProvider, Input} from 'native-base';
+import { Center, NativeBaseProvider, Input } from 'native-base';
 
-const ListItem = ({item, selected, onPress, onLongPress}) => (
+const ListItem = ({ item, selected, onPress, onLongPress }) => (
   <>
     <TouchableOpacity
       onPress={onPress}
       style={[styles.listItem, styles.shadow]}>
-      <View style={{padding: 8}}>
-        <Text style={{color: 'black'}}>{item.symptomName}</Text>
+      <View style={{ padding: 8 }}>
+        <Text style={{ color: 'black', fontFamily: "Mali-Regular" }}>{item.symptomName}</Text>
       </View>
       {selected && <View style={styles.overlay} />}
     </TouchableOpacity>
   </>
 );
 
-const ListItemIcon = ({item, selected, onPress, onLongPress}) => (
+const ListItemIcon = ({ item, selected, onPress, onLongPress }) => (
   <>
     <TouchableOpacity
       onPress={onPress}
       onLongPress={onLongPress}
       style={styles.listItemIcon}>
-      <View style={{padding: 8}}>
+      <View style={{ padding: 8, }}>
         <Center>
           <Image
             source={{
@@ -50,7 +50,7 @@ const ListItemIcon = ({item, selected, onPress, onLongPress}) => (
             }}
           />
 
-          <Text style={{color: 'black', marginTop: 12}}>
+          <Text style={{ color: 'black', marginTop: 5, fontFamily: "Mali-Regular" }}>
             {/* {item.typeTitle} */}
             {item.symptomName}
           </Text>
@@ -68,7 +68,7 @@ const SelectSymptom = props => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByImg')
+    fetch('http://192.168.1.10:8083/api/symptom/getSymptomByImg')
       .then(res => res.json())
       .then(result => {
         //console.log(result);
@@ -78,7 +78,7 @@ const SelectSymptom = props => {
   // console.log(items);
 
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/body/bodytype')
+    fetch('http://192.168.1.10:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
         // console.log(result);
@@ -91,7 +91,7 @@ const SelectSymptom = props => {
   const handlePress = id => {
     // setIsActive(!isActive);
     setActiveButton(id);
-    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByTypeNotImg/' + id)
+    fetch('http://192.168.1.10:8083/api/symptom/getSymptomByTypeNotImg/' + id)
       .then(res => res.json())
       .then(result => {
         //console.log(result);
@@ -129,120 +129,120 @@ const SelectSymptom = props => {
 
 
 
-  useEffect(() => {handlePress(1)},[])
+  useEffect(() => { handlePress(1) }, [])
 
   return (
     <NativeBaseProvider>
       <SafeAreaView style={styles.container}>
-        <ScrollView>
-          <Pressable onPress={deSelectItems} style={{flex: 1, padding: 15}}>
-            <View>
-              <View style={{flex: 1}}>
-                <Center>
-                  <View>
-                    {selectedItems.map(user => (
-                      <Text style={{color: 'black'}}>{user}</Text>
-                    ))}
-                    <Input
-                      style={[styles.center, styles.input]}
-                      size="l"
-                      variant="rounded"
-                      w="90%"
-                      py="0"
-                      placeholder="ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด"
-                      marginTop={1}
-                      marginBottom={3}
-                    />
-                  </View>
-                </Center>
 
-                <Text style={styles.head}>คุณมีอาการอะไรบ้าง ?</Text>
+        <Pressable onPress={deSelectItems}>
+          <View>
+            <Center>
+              <View style={{ marginTop: 15 }}>
+                {selectedItems.map(user => (
+                  <Text style={{ color: 'black' }}>{user}</Text>
+                ))}
+                <Input
+                  style={[styles.center, styles.input]}
+                  size="1"
+                  variant="rounded"
+                  w="90%"
+                  py="0"
+                  placeholder="ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด"
+                  marginTop={1}
+                  marginBottom={3}
+                />
+              </View>
+            </Center>
+
+            <Text style={styles.head}>คุณมีอาการอะไรบ้าง ?</Text>
+            <FlatList
+              numColumns={4}
+              data={items.data}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <ListItemIcon
+                  onPress={() => selectItems(item)}
+                  selected={getSelected(item)}
+                  item={item}
+                />
+              )}
+            />
+
+            <FlatList
+              data={titleCategory.data}
+              horizontal={true}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => handlePress(item.id)}
+                  style={[
+                    styles.button,
+                    item.id === activeButton && styles.buttonActive,
+                  ]}>
+                  <Text style={styles.buttonText}>{item.typeTitle}</Text>
+                </TouchableOpacity>
+              )}
+              keyExtractor={item => item.id}
+            />
+
+          </View>
+          <ScrollView>
+            <View >
+              <View>
                 <FlatList
-                  numColumns={4}
-                  data={items.data}
-                  keyExtractor={item => item.id}
-                  renderItem={({item}) => (
-                    <ListItemIcon
+                  style={styles.marginTop}
+                  data={list.data}
+                  renderItem={({ item }) => (
+                    <ListItem
                       onPress={() => selectItems(item)}
                       selected={getSelected(item)}
                       item={item}
                     />
                   )}
-                />
-              </View>
-
-              <View style={{flex: 2}}>
-                <FlatList
-                  data={titleCategory.data}
-                  horizontal={true}
-                  renderItem={({item}) => (
-                    <TouchableOpacity
-                      key={item.id}
-                      onPress={() => handlePress(item.id)}
-                      style={[
-                        styles.button,
-                        item.id === activeButton && styles.buttonActive,
-                      ]}>
-                      <Text style={styles.buttonText}>{item.typeTitle}</Text>
-                    </TouchableOpacity>
-                  )}
                   keyExtractor={item => item.id}
                 />
-                <View>
-                  <FlatList
-                    style={styles.marginTop}
-                    data={list.data}
-                    renderItem={({item}) => (
-                      <ScrollView>
-                        <ListItem
-                          onPress={() => selectItems(item)}
-                          selected={getSelected(item)}
-                          item={item}
-                        />
-                      </ScrollView>
-                    )}
-                    keyExtractor={item => item.id}
-                  />
-                </View>
               </View>
             </View>
-          </Pressable>
-        </ScrollView>
+          </ScrollView>
+        </Pressable>
+
       </SafeAreaView>
-    </NativeBaseProvider>
+    </NativeBaseProvider >
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#EAF4FB',
+    backgroundColor: '#DFF8FE',
     flex: 1,
   },
   button: {
     backgroundColor: '#CBE8F9',
     padding: 10,
     borderRadius: 5,
-    marginTop: 30,
+    marginTop: 10,
     marginLeft: 10,
-    marginBottom: 30,
+    marginBottom: 10,
   },
   buttonActive: {
-    backgroundColor: '#1387CA',
+    backgroundColor: '#96cce7',
     color: 'white',
   },
   buttonText: {
     color: 'black',
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: "Mali-Regular",
   },
   listItem: {
-    
-    backgroundColor: 'white',
+    backgroundColor: '#EAF8FC',
     marginBottom: 10,
     borderRadius: 5,
     overflow: 'hidden',
     height: 40,
     justifyContent: 'center',
     paddingLeft: 21,
+    margin: 10
   },
   marginTop: {
     marginTop: 0,
@@ -258,10 +258,12 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   listItemIcon: {
-    backgroundColor: '#EAF4FB',
+    backgroundColor: '#EAF8FC',
+    borderColor: '#E0E3E4',
+    borderWidth: 1,
+    borderRadius: 12,
     marginBottom: 10,
     overflow: 'hidden',
-    
   },
 
   overlay: {
@@ -284,7 +286,8 @@ const styles = StyleSheet.create({
   },
   head: {
     color: 'black',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: "Mali-Bold",
     marginBottom: 15,
     textAlign: 'center',
   },

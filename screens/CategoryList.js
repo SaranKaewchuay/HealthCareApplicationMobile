@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -11,53 +11,53 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import {NativeBaseProvider} from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 
 const var_dump = require('var_dump')
 
-const ListItem = ({item, selected, onPress, onLongPress}) => (
+const ListItem = ({ item, selected, onPress, onLongPress }) => (
   <>
     <TouchableOpacity
       onPress={onPress}
       style={[styles.listItem, styles.shadow]}>
-      <View style={{padding: 8}}>
-        <Text style={{color: 'black'}}>{item.symptomName}</Text>
+      <View style={{ padding: 8 }}>
+        <Text style={[{ color: 'black' }, styles.text]}>{item.symptomName}</Text>
       </View>
       {selected && <View style={styles.overlay} />}
     </TouchableOpacity>
   </>
 );
 
-const CategoryList = ({route}) => {
-    const [items, setItems] = useState([]);
-    
-    useEffect(() => {
-        fetch('http://192.168.1.5:8083/api/symptom/getSymptomByType/'+route.params.id)
-          .then(res => res.json())
-          .then(result => {
-            console.log(result);
-            setItems(result);
-          });
-      }, []);
+const CategoryList = ({ route }) => {
+  const [items, setItems] = useState([]);
 
-      const navigation = useNavigation();
-      const goSymptomDetail = (id) => {
-        navigation.navigate('SymptomDetail', {id:id});
-      }
+  useEffect(() => {
+    fetch('http://192.168.1.10:8083/api/symptom/getSymptomByType/' + route.params.id)
+      .then(res => res.json())
+      .then(result => {
+        console.log(result);
+        setItems(result);
+      });
+  }, []);
+
+  const navigation = useNavigation();
+  const goSymptomDetail = (id) => {
+    navigation.navigate('SymptomDetail', { id: id });
+  }
   return (
     <NativeBaseProvider>
-      <SafeAreaView>
-        <ScrollView style={styles.container}>
-          <Pressable style={{flex: 1, padding: 15}}>
-            <View>
-              <FlatList
-                data={items.data}
-                renderItem={({item}) => <ListItem item={item}  onPress={() => goSymptomDetail(item.id)} />}
-                keyExtractor={item => item.id}
-                nestedScrollEnabled={true}
-              />
-            </View>
-          </Pressable>
+      <SafeAreaView style={styles.container}>
+        <ScrollView >
+            <Pressable style={{ padding: 15 }}>
+              <View>
+                <FlatList
+                  data={items.data}
+                  renderItem={({ item }) => <ListItem item={item} onPress={() => goSymptomDetail(item.id)} />}
+                  keyExtractor={item => item.id}
+                  nestedScrollEnabled={true}
+                />
+              </View>
+            </Pressable>
         </ScrollView>
       </SafeAreaView>
     </NativeBaseProvider>
@@ -66,9 +66,12 @@ const CategoryList = ({route}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#EAF4FB',
+    flex: 1,
+    backgroundColor: '#daecf0',
   },
-
+  text: {
+    fontFamily: 'Mali-Regular',
+  },
   listItem: {
     backgroundColor: 'white',
     marginBottom: 10,

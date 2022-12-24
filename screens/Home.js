@@ -1,34 +1,34 @@
-import React,{useState,useEffect} from 'react';
-import { ScrollView,View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-import { NativeBaseProvider,Center,Box,Heading } from 'native-base';
+import { NativeBaseProvider, Center, Box, Heading } from 'native-base';
 import { images } from "../constants"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = (props) => {
 
-  const [user,setUser] = useState({})
-  const [isloading,setIsLoading] = useState(true)
+  const [user, setUser] = useState({})
+  const [isloading, setIsLoading] = useState(true)
 
   const fetchUser = async () => {
     const accessToken = await AsyncStorage.getItem('@accessToken')
     const response = fetch()
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchUser()
-  },[isloading])
+  }, [isloading])
 
   return (
     <NativeBaseProvider>
       <ScrollView style={styles.container}>
-      <Center w="100%">
-        <Box safeArea p="2" w="90%" maxW="290" py="5">
-          <Heading size="lg" color="#105A88" fontWeight="900" fontSize={50} alignSelf="center">
-            HealthCare
-          </Heading>
-        </Box>
-      </Center>
+        <Center w="100%">
+          <Box safeArea p="2" w="90%" maxW="290" py="5">
+            <Heading size="lg" color="#105A88" fontWeight="900" fontSize={50} alignSelf="center">
+              HealthCare
+            </Heading>
+          </Box>
+        </Center>
         <View style={styles.box}>
           <View style={styles.row}>
             <TouchableOpacity style={styles.button}>
@@ -45,9 +45,9 @@ const Home = (props) => {
             source={images.profile}
           />
         </View>
-          <View style={[styles.questionBox,styles.positionImg]}>
-            <Text style={styles.question}>สบายดีไหม แจ็ค ?</Text>
-          </View>
+        <View style={[styles.questionBox, styles.positionImg]}>
+          <Text style={styles.question}>สบายดีไหม แจ็ค ?</Text>
+        </View>
         <View style={[styles.row, styles.emoposition]}>
           <TouchableOpacity>
             <Image
@@ -63,7 +63,7 @@ const Home = (props) => {
               style={styles.emotion}
               source={images.bad}
             />
-             <View style={styles.questionBox}>
+            <View style={styles.questionBox}>
               <Text style={styles.question}>ไม่สบาย</Text>
             </View>
           </TouchableOpacity>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
-    color:"black"
+    color: "black"
   },
   profile: {
     marginTop: 20,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75,
     marginLeft: "20%",
-    
+
   },
   emoposition: {
     justifyContent: "center"
