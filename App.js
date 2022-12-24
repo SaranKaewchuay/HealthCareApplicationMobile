@@ -8,20 +8,20 @@ import {
   SymptomDetail,
   DiseaseDetail
 } from './screens';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
-import {Button, StyleSheet, Alert} from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { Button, StyleSheet, Alert } from 'react-native';
 
 import Tabs from './navigation/tabs';
 import TabsDefaultDate from './navigation/tabs1';
 
-import {LogBox} from 'react-native';
+import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const Stack = createStackNavigator();
 
-const App = ({route, navigation}) => {
+const App = ({ route, navigation }) => {
   //const { title } = route.params;
   return (
     <NavigationContainer>
@@ -118,7 +118,7 @@ const App = ({route, navigation}) => {
         <Stack.Screen
           name="SelectSymptom"
           component={SelectSymptom}
-          options={({navigation}) => ({
+          options={({ navigation }) => ({
             headerRight: () => (
               <Button
                 styles={styles.button}

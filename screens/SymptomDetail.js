@@ -8,7 +8,7 @@ const SymptomDetail = ({route}) => {
   const [items, setItems] = useState([]);
   useEffect(() => {
     fetch(
-      'http://192.168.1.5:8083/api/symptom/getSymptomById/' + route.params.id,
+      'http://192.168.1.10:8083/api/symptom/getSymptomById/' + route.params.id,
     )
       .then(res => res.json())
       .then(result => {
@@ -20,7 +20,7 @@ const SymptomDetail = ({route}) => {
   const [relatedDiseases, setRelatedDiseases] = useState([]);
   useEffect(() => {
     fetch(
-      'http://192.168.1.5:8083/api/symptom/getSymptomByDisease/' + route.params.id,
+      'http://192.168.1.10:8083/api/symptom/getSymptomByDisease/' + route.params.id,
     )
       .then(res => res.json())
       .then(result => {
@@ -42,7 +42,7 @@ const SymptomDetail = ({route}) => {
         onPress={() => goDiseaseDetail(item.id)}
         style={[styles.listItem, styles.shadow]}>
         <View style={{padding: 8}}>
-          <Text style={{color: 'black'}}>{item.diseaseName}</Text>
+          <Text style={{color: 'black' ,fontFamily:'Mali-Regular'}}>{item.diseaseName}</Text>
         </View>
         {selected && <View style={styles.overlay} />}
       </TouchableOpacity>
@@ -98,7 +98,7 @@ const SymptomDetail = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EAF4FB',
+    backgroundColor: '#daecf0',
   },
   blodtext: {
     fontSize: 17,
@@ -112,11 +112,12 @@ const styles = StyleSheet.create({
   },
   headertext: {
     fontSize: 25,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Mali-Bold',
     color: 'white',
     paddingTop: 22,
-    paddingLeft: 50,
-    marginTop: 6,
+    paddingLeft: 25,
+    margin: 5,
   },
   innerbox: {
     alignSelf: 'center',
@@ -152,8 +153,8 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   blodtext2: {
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontFamily: 'Mali-Bold',
     color: 'white',
   },
   listItem: {
@@ -174,8 +175,9 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   inner_small_text: {
-    fontSize: 15,
+    fontSize: 14,
     color: 'gray',
+    fontFamily: 'Mali-Regular',
   },
 });
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,14 +9,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {NativeBaseProvider} from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 
-const DiseaseDetail = ({route}) => {
+const DiseaseDetail = ({ route }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     fetch(
-      'http://192.168.1.5:8083/api/disease/getDiseaseById/' + route.params.id,
+      'http://192.168.1.10:8083/api/disease/getDiseaseById/' + route.params.id,
     )
       .then(res => res.json())
       .then(result => {
@@ -40,16 +40,16 @@ const DiseaseDetail = ({route}) => {
                 คำเเนะนำ{'\n'}***{'\n'}
               </Text>
               {items.map((items, index) => (
-          
-                  <Text letterSpacing={2} style={{color: 'black', fontFamily:"Kodchasan-Light"}}>
-                    {"อาการ"}{'\n'}{'\n'}
-                    {items.symptom} {'\n'}{'\n'}
-                    {"สาเหตุ"}{'\n'}{'\n'}
-                    {items.cause} {'\n'}{'\n'}
-                    {"วิธีรักษา"}{'\n'}{'\n'}
-                    {items.treatment} {'\n'}{'\n'}
-                    {"การดูแลตัวเอง"}{'\n'}{'\n'}
-                    {items.selfCare} {'\n'}
+
+                <Text letterSpacing={2} style={{ color: 'black', fontFamily: "Mali-Regular", }}>
+                  {"* อาการ *"}{'\n'}{'\n'}
+                  {items.symptom} {'\n'}{'\n'}
+                  {"* สาเหตุ *"}{'\n'}{'\n'}
+                  {items.cause} {'\n'}{'\n'}
+                  {"* วิธีรักษา *"}{'\n'}{'\n'}
+                  {items.treatment} {'\n'}{'\n'}
+                  {"* การดูแลตัวเอง *"}{'\n'}{'\n'}
+                  {items.selfCare} {'\n'}
                 </Text>
               ))}
             </Text>
@@ -63,15 +63,11 @@ const DiseaseDetail = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EAF4FB',
-    
-  },
-  font:{
-    fontFamily:"RobotoCondensed-LightItalic"
+    backgroundColor: '#daecf0',
   },
   blodtext: {
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontFamily: "Mali-Bold",
     color: '#004C7A',
   },
   header: {
@@ -81,10 +77,10 @@ const styles = StyleSheet.create({
   },
   headertext: {
     fontSize: 25,
-    fontWeight: 'bold',
+    fontFamily: "Mali-Bold",
     color: 'white',
     paddingTop: 22,
-    paddingLeft: 50,
+    paddingLeft: 25,
     marginTop: 6,
   },
   innerbox: {
@@ -98,7 +94,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 25,
     marginTop: 25,
-    marginBottom:25
+    marginBottom: 25
   },
   innerbox2: {
     alignSelf: 'center',
