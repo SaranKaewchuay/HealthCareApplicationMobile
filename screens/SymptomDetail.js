@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ScrollView, SafeAreaView,FlatList,TouchableOpacity} from 'react-native';
 
-import {NativeBaseProvider} from 'native-base';
+import {Button, NativeBaseProvider} from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
 const SymptomDetail = ({route}) => {
   const [items, setItems] = useState([]);
   useEffect(() => {
     fetch(
-      'http://192.168.1.10:8083/api/symptom/getSymptomById/' + route.params.id,
+      'http://192.168.1.5:8083/api/symptom/getSymptomById/' + route.params.id,
     )
       .then(res => res.json())
       .then(result => {
@@ -20,7 +20,7 @@ const SymptomDetail = ({route}) => {
   const [relatedDiseases, setRelatedDiseases] = useState([]);
   useEffect(() => {
     fetch(
-      'http://192.168.1.10:8083/api/symptom/getSymptomByDisease/' + route.params.id,
+      'http://192.168.1.5:8083/api/symptom/getSymptomByDisease/' + route.params.id,
     )
       .then(res => res.json())
       .then(result => {
@@ -35,6 +35,7 @@ const SymptomDetail = ({route}) => {
   const goDiseaseDetail = (id) => {
     navigation.navigate('DiseaseDetail', {id:id});
   }
+
 
   const ListItem = ({item, selected}) => (
     <>
@@ -89,6 +90,7 @@ const SymptomDetail = ({route}) => {
                   />
                 </View>
           </View>
+          
         </ScrollView>
       </SafeAreaView>
     </NativeBaseProvider>

@@ -10,6 +10,7 @@ import Date from "./Date"
 import Maps from "./Maps"
 import SymptomDetail from "./SymptomDetail"
 import DiseaseDetail from "./DiseaseDetail"
+import RecordDetail from "./RecordDetail"
 
 export {
     Login,
@@ -23,5 +24,6 @@ export {
     Date,
     Maps,
     SymptomDetail,
-    DiseaseDetail
+    DiseaseDetail,
+    RecordDetail
 };

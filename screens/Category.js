@@ -7,7 +7,8 @@ import {
   Heading,
   Button,
   Image,
-  Text
+  Text,
+  Input 
 } from 'native-base';
 import { images } from '../constants';
 import { useNavigation } from '@react-navigation/native';
@@ -17,7 +18,7 @@ const Category = (props) => {
 
 
   useEffect(() => {
-    fetch('http://192.168.1.10:8083/api/body/bodytype')
+    fetch('http://192.168.1.5:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
         console.log(result);
@@ -40,6 +41,21 @@ const Category = (props) => {
               HealthCare
             </Heading>
           </Box>
+
+              <View >
+   
+                <Input
+                  style={[styles.center, styles.input]}
+                  size="1"
+                  variant="rounded"
+                  w="90%"
+                  py="0"
+                  placeholder="ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด"
+                  marginTop={1}
+                  marginBottom={3}
+                />
+              </View>
+
         </Center>
         <Button
           size="lg"
@@ -154,6 +170,7 @@ const Category = (props) => {
             // width={180}
             marginTop={'0'}
             marginLeft={'0'}
+            padding={'4'}
             onPress={() => props.navigation.navigate('Maps')}
           >
             <Text color="white" fontSize={26} style={styles.text} >
@@ -180,6 +197,13 @@ const styles = StyleSheet.create({
   },
   color: {
     color: 'white',
+  },
+  input: {
+    width: 200,
+    height: 42,
+  },
+  center: {
+    textAlign: 'auto',
   },
 });
 

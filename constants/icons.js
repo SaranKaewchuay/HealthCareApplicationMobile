@@ -7,6 +7,7 @@ const star = require("../assets/icons/star.png");
 const upload = require("../assets/icons/upload.png");
 const stethoscope = require("../assets/icons/stethoscope.png");
 const calendar = require("../assets/icons/calendar.png");
+const edit = require("../assets/icons/editing.png");
 
 export default {
     home,
@@ -17,5 +18,6 @@ export default {
     star,
     upload,
     stethoscope,
-    calendar
+    calendar,
+    edit 
 }

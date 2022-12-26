@@ -9,12 +9,13 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
-  Button,
+  Alert
 } from 'react-native';
 
 import { Center, NativeBaseProvider, Input } from 'native-base';
+import {useNavigation} from '@react-navigation/native';
 
-const ListItem = ({ item, selected, onPress, onLongPress }) => (
+const ListItem = ({ item, selected, onPress}) => (
   <>
     <TouchableOpacity
       onPress={onPress}
@@ -27,13 +28,14 @@ const ListItem = ({ item, selected, onPress, onLongPress }) => (
   </>
 );
 
-const ListItemIcon = ({ item, selected, onPress, onLongPress }) => (
+
+
+const ListItemIcon = ({ item, selected, onPress}) => (
   <>
     <TouchableOpacity
       onPress={onPress}
-      onLongPress={onLongPress}
       style={styles.listItemIcon}>
-      <View style={{ padding: 8, }}>
+      <View style={{ padding: 11}}>
         <Center>
           <Image
             source={{
@@ -61,40 +63,51 @@ const ListItemIcon = ({ item, selected, onPress, onLongPress }) => (
   </>
 );
 
-const SelectSymptom = props => {
+const SelectSymptom =({route}) => {
   // const [selectCategory, setSelectCategory] = useState();
   const [items, setItems] = useState([]);
   const [titleCategory, setTitleCategory] = useState([]);
   const [list, setList] = useState([]);
+  const deSelectItems = () => setSelectedItems([]);
+  const [activeButton, setActiveButton] = useState(null);
+  const [currentDate, setCurrentDate] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]);
+  const getSelected = (contact) => selectedItems.includes(contact.id);
+  const [latedId, setLatedId] = useState();
 
+  getSelected(66)
+
+  
   useEffect(() => {
-    fetch('http://192.168.1.10:8083/api/symptom/getSymptomByImg')
+    setCurrentDate(route.params.date)
+    setSelectedItems([]);
+    
+  }, []);
+
+  console.log("CurrentDate")
+  console.log(currentDate)
+  useEffect(() => {
+    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByImg')
       .then(res => res.json())
       .then(result => {
-        //console.log(result);
         setItems(result);
       });
   }, []);
-  // console.log(items);
+
 
   useEffect(() => {
-    fetch('http://192.168.1.10:8083/api/body/bodytype')
+    fetch('http://192.168.1.5:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
-        // console.log(result);
         setTitleCategory(result);
       });
   }, []);
 
-  const [activeButton, setActiveButton] = useState(null);
-
   const handlePress = id => {
-    // setIsActive(!isActive);
     setActiveButton(id);
-    fetch('http://192.168.1.10:8083/api/symptom/getSymptomByTypeNotImg/' + id)
+    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByTypeNotImg/' + id)
       .then(res => res.json())
       .then(result => {
-        //console.log(result);
         setList(result);
       });
   };
@@ -102,20 +115,7 @@ const SelectSymptom = props => {
   console.log('คือ');
   console.log(list.data);
 
-  const [selectedItems, setSelectedItems] = useState([]);
-  const handleOnPress = contact => {
-    if (selectedItems.length) {
-      return selectItems(contact);
-    }
-
-    // here you can add you code what do you want if user just do single tap
-    console.log('pressed');
-  };
-
-  const getSelected = contact => selectedItems.includes(contact.id);
-  const [item] = useState('');
-  const deSelectItems = () => setSelectedItems([]);
-
+  
   const selectItems = item => {
     console.log(item);
     if (selectedItems.includes(item.id)) {
@@ -131,30 +131,93 @@ const SelectSymptom = props => {
 
   useEffect(() => { handlePress(1) }, [])
 
+  const [counter, setCounter] = useState(0);
+
+  const navigation = useNavigation();
+  const goDate = id => {
+    navigation.navigate('TabsDefaultDate', {date: currentDate});
+  };
+
+  const handleRecord = async () => {
+    console.log("เข้า")
+      fetch(`http://192.168.1.5:8083/api/daily/add-record`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          dateRecord : currentDate ,
+          dailyDescription : "",
+          User_id:1
+        }) 
+      })
+      setTimeout(() => {
+        detail();
+      }, 500);
+      
+
+      
+  };
+
+
+  const detail = ()=>{
+  fetch(`http://192.168.1.5:8083/api/record/add-record`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        Symptom_id : selectedItems,
+    
+      }) 
+    }).then((response) => response.json())
+    .then(data => {
+        if (!data.error) {
+          Alert.alert('สำเร็จ', 'บันทึกอาการสำเร็จ', [
+            {
+              text: 'ยกเลิก'
+            },
+            {
+              text: 'ตกลง',
+              onPress: () => goDate(),
+            },
+            
+          ]);
+        }
+        else {
+        Alert.alert('ไม่สำเร็จ', 'บันทึกอาการไม่สำเร็จ', [
+          {
+            text: 'OK'
+          },
+        ]);
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+        Alert.alert('invalid data');
+    });
+
+    
+  }
   return (
     <NativeBaseProvider>
       <SafeAreaView style={styles.container}>
 
         <Pressable onPress={deSelectItems}>
-          <View>
-            <Center>
-              <View style={{ marginTop: 15 }}>
-                {selectedItems.map(user => (
-                  <Text style={{ color: 'black' }}>{user}</Text>
-                ))}
-                <Input
-                  style={[styles.center, styles.input]}
-                  size="1"
-                  variant="rounded"
-                  w="90%"
-                  py="0"
-                  placeholder="ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด"
-                  marginTop={1}
-                  marginBottom={3}
-                />
-              </View>
-            </Center>
+          <View style={styles.headerbox}>
+            <Text style={styles.headertext}>เลือกอาการ</Text>
+          </View>
 
+          <TouchableOpacity 
+            style={styles.listview}
+            onPress={() =>  handleRecord()}
+            >
+                <Text style={[styles.buttonText,{color:"white"}]}> เสร็จสิ้น </Text>
+          </TouchableOpacity>
+          
+          <View>
             <Text style={styles.head}>คุณมีอาการอะไรบ้าง ?</Text>
             <FlatList
               numColumns={4}
@@ -206,13 +269,32 @@ const SelectSymptom = props => {
             </View>
           </ScrollView>
         </Pressable>
-
       </SafeAreaView>
     </NativeBaseProvider >
   );
 };
 
 const styles = StyleSheet.create({
+  listview: {
+    position: 'absolute',
+    backgroundColor: '#00446e',
+    borderRadius: 10,
+    marginTop:12,
+    alignSelf:"flex-end",
+  },
+  headerbox: {
+    height: 60,
+    backgroundColor: '#2585C0',
+    elevation: 20,
+    shadowColor: '#52006A',
+  },
+  headertext: {
+    fontFamily: "Mali-Bold",
+    fontSize: 17,
+    color: 'white',
+    textAlign: 'center',
+    paddingVertical: 14,
+  },
   container: {
     backgroundColor: '#DFF8FE',
     flex: 1,
@@ -239,7 +321,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     overflow: 'hidden',
-    height: 40,
+    height: 42,
     justifyContent: 'center',
     paddingLeft: 21,
     margin: 10

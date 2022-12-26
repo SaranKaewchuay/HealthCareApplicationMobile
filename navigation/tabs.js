@@ -26,7 +26,7 @@ const Tabs = () => {
           height: 100,
         },
       }}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Home"
         component={Home}
         options={{
@@ -35,13 +35,13 @@ const Tabs = () => {
           ),
           headerShown: false,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Play"
         component={Category}
         options={{
           tabBarIcon: ({focused}) => (
-            <TabIcon focused={focused} icon={icons.stethoscope} />
+            <TabIcon focused={focused} icon={icons.home} />
           ),
           //<Icon name="rocket" size={30} color="#900" />
           headerShown: false,

@@ -48,6 +48,8 @@ const Home = (props) => {
         <View style={[styles.questionBox, styles.positionImg]}>
           <Text style={styles.question}>สบายดีไหม แจ็ค ?</Text>
         </View>
+
+        
         <View style={[styles.row, styles.emoposition]}>
           <TouchableOpacity>
             <Image

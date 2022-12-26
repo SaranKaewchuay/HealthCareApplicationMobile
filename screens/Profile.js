@@ -78,13 +78,6 @@ const styles = StyleSheet.create({
     elevation: 20,
     shadowColor: '#52006A',
   },
-  back: {
-    position: 'absolute',
-    width: 30,
-    height: 30,
-    left: 8,
-    top: 15,
-  },
   headertext: {
     fontSize: 17,
     fontWeight: 'bold',
@@ -92,6 +85,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 14,
     marginTop: 6,
+  },
+  back: {
+    position: 'absolute',
+    width: 30,
+    height: 30,
+    left: 8,
+    top: 15,
   },
   profile_pic: {
     width: 239,

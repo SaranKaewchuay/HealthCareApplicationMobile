@@ -6,8 +6,7 @@ import {
   CategoryList,
   Maps,
   SymptomDetail,
-  DiseaseDetail,
-  RecordDetail
+  DiseaseDetail
 } from './screens';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -107,23 +106,6 @@ const App = ({ route, navigation }) => {
           }}
           name="Home"
           component={Tabs}
-        />
-
-        <Stack.Screen
-        options={{
-          title: 'บันทึกรายละเอียดเพิ่มเติม',
-          headerStyle: {
-            textAlign: 'center',
-            backgroundColor: '#2585C0',
-          },
-          headerTitleStyle: {
-            color: 'white',
-            alignSelf: 'center',
-            fontWeight: 'bold',
-          },
-        }}
-          name="RecordDetail"
-          component={RecordDetail}
         />
 
         <Stack.Screen

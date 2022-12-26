@@ -16,7 +16,7 @@ const DiseaseDetail = ({ route }) => {
 
   useEffect(() => {
     fetch(
-      'http://192.168.1.10:8083/api/disease/getDiseaseById/' + route.params.id,
+      'http://192.168.1.5:8083/api/disease/getDiseaseById/' + route.params.id,
     )
       .then(res => res.json())
       .then(result => {
