@@ -17,7 +17,7 @@ const Category = props => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/body/bodytype')
+    fetch('http://192.168.1.10:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
         console.log(result);

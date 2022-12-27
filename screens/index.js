@@ -12,6 +12,7 @@ import SymptomDetail from "./SymptomDetail"
 import DiseaseDetail from "./DiseaseDetail"
 import RecordDetail from "./RecordDetail"
 import Search from "./Search"
+import Auth from "./Auth"
 
 export {
     Login,
@@ -27,5 +28,6 @@ export {
     DiseaseDetail,
     RecordDetail,
     DateRecord,
-    Search
+    Search,
+    Auth
 };
