@@ -33,7 +33,7 @@ const App = ({route, navigation}) => {
           options={{
             headerShown: false,  
           }}
-          name="Login"
+          name="Auth"
           component={Auth}
         />
 

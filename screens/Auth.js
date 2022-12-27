@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Alert } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Alert, } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000';
 
@@ -19,7 +21,9 @@ const AuthScreen = (props) => {
         setMessage('');
     };
 
-    const onLoggedIn = token => {
+    const onLoggedIn = async () => {
+        const token = await getToken();
+        console.log("token ==== > ",token);
         fetch(`${API_URL}/private`, {
             method: 'GET',
             headers: {
@@ -65,12 +69,18 @@ const AuthScreen = (props) => {
                         setMessage(jsonRes.message);
                     } else {
                         onLoggedIn(jsonRes.token);
+                        storeToken(jsonRes.token);
                         setIsError(false);
                         setMessage(jsonRes.message);
                         Alert.alert('Success', 'Signup Successfully', [
                             {
                                 text: 'OK',
-                                onPress: () => props.navigation.navigate("Home"),
+                                onPress: () => {
+                                    if (isLogin) {
+                                        props.navigation.navigate("Home")
+                                    }
+                                    else setIsLogin(!isLogin);
+                                }
                             },
 
                         ]);
@@ -84,6 +94,25 @@ const AuthScreen = (props) => {
             });
     };
 
+
+    //  start get token by asyncStorage
+    const storeToken = async (token) => {
+        try {
+            await AsyncStorage.setItem('token', token)
+        } catch (e) {
+            console.log("error");
+            console.log(e);
+        }
+    }
+
+    const getToken = async () => {
+        try {
+            return await AsyncStorage.getItem('token')
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    //  end get token by asyncStorage
     const getMessage = () => {
         const status = isError ? `Error: ` : `Success: `;
         return status + message;
