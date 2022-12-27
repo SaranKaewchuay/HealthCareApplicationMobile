@@ -2,7 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import { Icon } from "react-native-vector-icons"
 
-import {Home, Category, Profile, Date} from '../screens';
+import {Home, Category, Profile, Date, DateRecord} from '../screens';
 import {COLORS, icons} from '../constants';
 
 import {TabIcon} from '../components';
@@ -47,9 +47,10 @@ const Tabs = () => {
           headerShown: false,
         }}
       />
+
       <Tab.Screen
         name="Date"
-        component={Date}
+        component={DateRecord}
         options={{
           tabBarIcon: ({focused}) => (
             <TabIcon focused={focused} icon={icons.calendar} />
