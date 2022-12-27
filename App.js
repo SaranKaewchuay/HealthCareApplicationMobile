@@ -7,22 +7,23 @@ import {
   Maps,
   SymptomDetail,
   DiseaseDetail,
-  RecordDetail
+  RecordDetail,
+  Search
 } from './screens';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { Button, StyleSheet, Alert } from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {Button, StyleSheet, Alert} from 'react-native';
 
 import Tabs from './navigation/tabs';
 import TabsDefaultDate from './navigation/tabs1';
 
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const Stack = createStackNavigator();
 
-const App = ({ route, navigation }) => {
+const App = ({route, navigation}) => {
   //const { title } = route.params;
   return (
     <NavigationContainer>
@@ -34,6 +35,15 @@ const App = ({ route, navigation }) => {
           name="Login"
           component={Login}
         /> */}
+
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            title: "Search"
+          }}
+          name="Search"
+          component={Search}
+        />
         <Stack.Screen
           options={{
             headerShown: false,
@@ -110,33 +120,33 @@ const App = ({ route, navigation }) => {
         />
 
         <Stack.Screen
-        options={{
-          title: 'บันทึกรายละเอียดเพิ่มเติม',
-          headerStyle: {
-            textAlign: 'center',
-            backgroundColor: '#2585C0',
-          },
-          headerTitleStyle: {
-            color: 'white',
-            alignSelf: 'center',
-            fontWeight: 'bold',
-          },
-        }}
+          options={{
+            title: 'บันทึกรายละเอียดเพิ่มเติม',
+            headerStyle: {
+              textAlign: 'center',
+              backgroundColor: '#2585C0',
+            },
+            headerTitleStyle: {
+              color: 'white',
+              alignSelf: 'center',
+              fontWeight: 'bold',
+            },
+          }}
           name="RecordDetail"
           component={RecordDetail}
         />
 
-        <Stack.Screen
+        {/* <Stack.Screen
           options={{
             headerShown: false,
           }}
           name="TabsDefaultDate"
           component={TabsDefaultDate}
-        />
+        /> */}
         <Stack.Screen
           name="SelectSymptom"
           component={SelectSymptom}
-          options={({ navigation }) => ({
+          options={({navigation}) => ({
             headerShown: false,
             headerRight: () => (
               <Button

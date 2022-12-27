@@ -12,12 +12,18 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {useNavigation} from '@react-navigation/native';
 
 import {images} from '../constants';
-import {StrictMode} from 'react';
+import {TabIcon} from '../components';
+import {icons} from '../constants';
 
-const Date = ({route, props}) => {
+
+
+
+const DateRecord = ({route, props}) => {
   const [items, setItems] = useState([]);
   const [selectedDate, setSelectedDate] = useState();
   const [id, setID] = useState();
+  const [dailyDescription, setDailyDescription] = useState([]);
+
 
   useEffect(() => {
     if (!route) {
@@ -27,12 +33,7 @@ const Date = ({route, props}) => {
 
   console.log(selectedDate);
 
-  useEffect(() => {
-    if (route.params?.text) {
-      console.log(route.params?.text);
-    }
-  }, [route.params?.post]);
-
+ 
   const getItemForDate = () => {
     fetch(
       'http://192.168.1.5:8083/api/daily/getRecordByDate/' +
@@ -44,6 +45,9 @@ const Date = ({route, props}) => {
         setItems(result.data);
       });
   };
+
+  console.log('dailyDescription');
+  console.log(dailyDescription);
 
   const ListItem = ({item}) => (
     <>
@@ -65,7 +69,15 @@ const Date = ({route, props}) => {
   };
 
   const goRecordDetail = detail => {
-    navigation.navigate('RecordDetail', {detail: detail});
+    {
+      items.map((items, index) =>
+        navigation.navigate('RecordDetail', {
+          id: items.DailyRecord_id,
+          date: selectedDate,
+          detail: detail,
+        }),
+      );
+    }
   };
 
   const goSelectSymptom = () => {
@@ -99,6 +111,10 @@ const Date = ({route, props}) => {
           <TouchableOpacity>
             <View style={styles.todobox}>
               <Text style={styles.todotext}>
+                <Text style={{fontSize: 18}}>
+                  {selectedDate}
+                  {'\n'}
+                </Text>
                 <Text style={{fontSize: 18}}>ยังไม่บันทึก</Text>
               </Text>
             </View>
@@ -120,83 +136,97 @@ const Date = ({route, props}) => {
           </View>
         </View>
       ) : (
-        <View style={{marginLeft: 20, marginRight: 20}}>
-          <TouchableOpacity>
-            <View style={styles.todobox}>
-              <Text style={styles.todotext}>
-                <Text style={{fontSize: 18}}>
-                  {selectedDate}
-                  {'\n'}
-                </Text>
-                {items.map((items, index) => (
-                  <Text style={{color: 'black', fontFamily: 'Mali-Regular'}}>
-                    {items.symptomName + '  '}
-                  </Text>
-                ))}
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 18,
-              marginLeft: 20,
-              marginBottom: 20,
-            }}>
-            อาการ
-          </Text>
-          <FlatList
-            style={styles.marginTop}
-            data={items}
-            renderItem={({item}) => <ListItem item={item} />}
-            keyExtractor={item => item.id}
-          />
-
-          {items.map((items, index) => (
-            <View>
-              <TouchableOpacity
-                onPress={() => goRecordDetail(items.dailyDescription)}>
-                <Text style={{color: 'black', fontFamily: 'Mali-Regular'}}>
-                  {items.dailyDescription}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-        </View>
-      )}
-      <TouchableOpacity
-                style={styles.list}
-                onPress={() => goRecordDetail(items.dailyDescription)}>
-                <View style={{padding: 8, paddingBottom: 15, paddingTop: 15}}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      paddingLeft: 20,
-                      fontWeight: 'bold',
-                    }}>
-                    บันทึกรายละเอียดเพิ่มเติม
+        <View>
+          <View style={{marginLeft: 20, marginRight: 20}}>
+            <TouchableOpacity>
+              <View style={[styles.todobox, {flexDirection: 'row'}]}>
+                <View style={{flex: 1}}>
+                  <Text style={styles.todotext}>
+                    <Text style={{fontSize: 18}}>
+                      {selectedDate}
+                      {'\n'}
+                    </Text>
+                    {items.map((items, index) => (
+                      <Text
+                        style={{color: 'black', fontFamily: 'Mali-Regular',marginLeft:10}}>
+                        {items.symptomName + '  '}
+                      </Text>
+                    ))}
                   </Text>
                 </View>
+                <View style={{flex: 0.08}}>
+                  <TabIcon icon={icons.edit} />
+                </View>
+              </View>
+            </TouchableOpacity>
+            <Text style={styles.font}>อาการ</Text>
+            <FlatList
+              style={styles.marginTop}
+              data={items}
+              renderItem={({item}) => <ListItem item={item} />}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        </View>
+      )}
+
+      {items.slice(0, 1).map((items, index) =>
+        items.dailyDescription === null ||
+        items.dailyDescription.length === 0 ? (
+          <View>
+            <TouchableOpacity
+              style={styles.list}
+              onPress={() => goRecordDetail()}>
+              <View style={{padding: 8, paddingBottom: 15, paddingTop: 15}}>
+                <Text
+                  style={{
+                    color: 'white',
+                    paddingLeft: 20,
+                    fontWeight: 'bold',
+                  }}>
+                  บันทึกรายละเอียดเพิ่มเติม
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View>
+            <View>
+              <Text style={[styles.font, {marginLeft: 19}]}>
+                รายละเอียดเพิ่มเติม
+              </Text>
+              <TouchableOpacity
+                onPress={() => goRecordDetail(items.dailyDescription)}>
+                <View style={[styles.todobox, {paddingBottom: 30}]}>
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={{flex: 1}}>
+                      <Text style={[styles.todotext, {paddingLeft: 20}]}>
+                        {items.dailyDescription}
+                      </Text>
+                    </View>
+                    <View style={{flex: 0.1}}>
+                      <TabIcon icon={icons.edit} />
+                    </View>
+                  </View>
+                </View>
               </TouchableOpacity>
-      {/* {items. === null || items.length === 0 ? (
-        <View>
-
-        </View>
-      ) : (
-        <View style={{marginLeft: 20, marginRight: 20}}>
-      
-
-         
-         
-                
-        </View>
-      )} */}
+            </View>
+          </View>
+        ),
+      )}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  font: {
+    color: 'black',
+    paddingLeft: 20,
+    fontSize: 16,
+    fontFamily: 'Mali-Bold',
+    marginTop: 10,
+    marginBottom: 10,
+  },
   container: {
     flex: 1,
     backgroundColor: '#EAF4FB',
@@ -224,7 +254,6 @@ const styles = StyleSheet.create({
   },
   todobox: {
     backgroundColor: '#FFFFFF',
-
     margin: 20,
     marginTop: 0,
     marginLeft: '5%',
@@ -332,4 +361,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Date;
+export default DateRecord;

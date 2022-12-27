@@ -6,11 +6,12 @@ import Category from "./Category"
 import SelectSymptom from "./SelectSymptom"
 import CategoryList from "./CategoryList"
 import Profile from "./Profile"
-import Date from "./Date"
+import DateRecord from "./DateRecord"
 import Maps from "./Maps"
 import SymptomDetail from "./SymptomDetail"
 import DiseaseDetail from "./DiseaseDetail"
 import RecordDetail from "./RecordDetail"
+import Search from "./Search"
 
 export {
     Login,
@@ -21,9 +22,10 @@ export {
     SelectSymptom,
     CategoryList,
     Profile,
-    Date,
     Maps,
     SymptomDetail,
     DiseaseDetail,
-    RecordDetail
+    RecordDetail,
+    DateRecord,
+    Search
 };

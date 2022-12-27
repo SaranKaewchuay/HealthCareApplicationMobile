@@ -37,7 +37,7 @@ const RecordDetail = ({route}) => {
   }, []);
   const navigation = useNavigation();
   const goDate = ()=> {
-    navigation.navigate('TabsDefaultDate', {text: text});
+    navigation.navigate('TabsDefaultDate');
   };
 
   

@@ -1,5 +1,5 @@
-import { useEffect, useState, } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import {useEffect, useState} from 'react';
+import {StyleSheet, View, ScrollView,TouchableOpacity} from 'react-native';
 import {
   NativeBaseProvider,
   Center,
@@ -8,14 +8,13 @@ import {
   Button,
   Image,
   Text,
-  Input 
+  Input,
 } from 'native-base';
-import { images } from '../constants';
-import { useNavigation } from '@react-navigation/native';
+import {images} from '../constants';
+import {useNavigation} from '@react-navigation/native';
 
-const Category = (props) => {
+const Category = props => {
   const [items, setItems] = useState([]);
-
 
   useEffect(() => {
     fetch('http://192.168.1.5:8083/api/body/bodytype')
@@ -26,36 +25,44 @@ const Category = (props) => {
       });
   }, []);
 
-  console.log(items)
+  console.log(items);
 
   const navigation = useNavigation();
-  const goCategotyList = (id) => {
-    navigation.navigate('CategoryList', { id: id });
-  }
+  const goCategotyList = id => {
+    navigation.navigate('CategoryList', {id: id});
+  };
+  const goSearch = () => {
+    navigation.navigate('Search');
+  };
   return (
     <NativeBaseProvider>
       <ScrollView style={styles.container}>
         <Center w="100%">
           <Box safeArea p="2" w="90%" maxW="290" py="5">
-            <Heading size="lg" color="#105A88" fontWeight="900" fontSize={50} alignSelf="center">
+            <Heading
+              size="lg"
+              color="#105A88"
+              fontWeight="900"
+              fontSize={50}
+              alignSelf="center">
               HealthCare
             </Heading>
           </Box>
+          <TouchableOpacity onPress={() => goSearch()} style={[styles.center, styles.input]}>
+            <Text style={[{textAlign:"center",marginTop:10}]}>ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด</Text>
 
-              <View >
-   
-                <Input
-                  style={[styles.center, styles.input]}
-                  size="1"
-                  variant="rounded"
-                  w="90%"
-                  py="0"
-                  placeholder="ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด"
-                  marginTop={1}
-                  marginBottom={3}
-                />
-              </View>
+              {/* <Input
+                style={[styles.center, styles.input]}
+                size="1"
+                variant="rounded"
+                w="90%"
+                py="0"
+                placeholder="ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด"
+                marginTop={1}
+                marginBottom={3}
+              /> */}
 
+          </TouchableOpacity>
         </Center>
         <Button
           size="lg"
@@ -63,8 +70,7 @@ const Category = (props) => {
           margin={2}
           bg="lightBlue.700"
           padding={0}
-          onPress={() => goCategotyList(1)}
-        >
+          onPress={() => goCategotyList(1)}>
           <View flexDirection={'row'}>
             <Image
               size={120}
@@ -76,13 +82,15 @@ const Category = (props) => {
               // bold="900"
               fontSize={26}
               color="white"
-
               marginRight={20}
-              marginTop={3} style={styles.text}>
+              marginTop={3}
+              style={styles.text}>
               ศีรษะ
-              <Text fontSize={15} style={styles.text}> {'\n'}หู ตา คอ จมูก ปาก</Text>
+              <Text fontSize={15} style={styles.text}>
+                {' '}
+                {'\n'}หู ตา คอ จมูก ปาก
+              </Text>
             </Text>
-
           </View>
         </Button>
         <Button
@@ -92,8 +100,7 @@ const Category = (props) => {
           bg="lightBlue.700"
           padding={0}
           marginTop={'0'}
-          onPress={() => goCategotyList(2)}
-        >
+          onPress={() => goCategotyList(2)}>
           <View flexDirection={'row'}>
             <Center>
               <Image
@@ -109,9 +116,13 @@ const Category = (props) => {
               color="white"
               marginLeft={2}
               marginRight={4}
-              marginTop={2} style={styles.text}>
+              marginTop={2}
+              style={styles.text}>
               ลำตัว
-              <Text fontSize={15} style={styles.text}> {'\n'}ท้อง แขน มือ อวัยวะภายใน</Text>
+              <Text fontSize={15} style={styles.text}>
+                {' '}
+                {'\n'}ท้อง แขน มือ อวัยวะภายใน
+              </Text>
             </Text>
           </View>
         </Button>
@@ -137,9 +148,13 @@ const Category = (props) => {
               color="white"
               marginLeft={1}
               marginRight={20}
-              marginTop={8} style={styles.text}>
+              marginTop={8}
+              style={styles.text}>
               ส่วนล่าง
-              <Text fontSize={15} style={styles.text}> {'\n'}อวัยวะเพศ ขา เท้า</Text>
+              <Text fontSize={15} style={styles.text}>
+                {' '}
+                {'\n'}อวัยวะเพศ ขา เท้า
+              </Text>
             </Text>
           </View>
         </Button>
@@ -151,14 +166,19 @@ const Category = (props) => {
             bg="lightBlue.700"
             width={180}
             marginTop={'0'}
-            onPress={() => goCategotyList(4)}
-          >
+            onPress={() => goCategotyList(4)}>
             <Center>
-              <View >
-                <Text fontSize={29} paddingTop={5} color="white" style={styles.text}>
+              <View>
+                <Text
+                  fontSize={29}
+                  paddingTop={5}
+                  color="white"
+                  style={styles.text}>
                   ทั่วไป
                 </Text>
-                <Text color="white" style={styles.text}>ไข้หวัด ผิวหนัง ฯลฯ</Text>
+                <Text color="white" style={styles.text}>
+                  ไข้หวัด ผิวหนัง ฯลฯ
+                </Text>
               </View>
             </Center>
           </Button>
@@ -171,9 +191,8 @@ const Category = (props) => {
             marginTop={'0'}
             marginLeft={'0'}
             padding={'4'}
-            onPress={() => props.navigation.navigate('Maps')}
-          >
-            <Text color="white" fontSize={26} style={styles.text} >
+            onPress={() => props.navigation.navigate('Maps')}>
+            <Text color="white" fontSize={26} style={styles.text}>
               โรงพยาบาล
             </Text>
           </Button>
@@ -199,8 +218,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   input: {
-    width: 200,
-    height: 42,
+    width: 350,
+    borderRadius:50,
+    height: 45,
+    backgroundColor:"#a8deff"
   },
   center: {
     textAlign: 'auto',
