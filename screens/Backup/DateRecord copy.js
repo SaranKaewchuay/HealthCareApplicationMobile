@@ -11,9 +11,9 @@ import {
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {useNavigation} from '@react-navigation/native';
 
-import {images} from '../constants';
-import {TabIcon} from '../components';
-import {icons} from '../constants';
+import {images} from '../../constants';
+import {TabIcon} from '../../components';
+import {icons} from '../../constants';
 
 const DateRecord = ({route, props}) => {
   const [items, setItems] = useState([]);

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import {Box, Center, Heading, NativeBaseProvider} from 'native-base';
-import {images_profile} from '../constants';
+import {images_profile} from '../../constants';
 import {border} from 'native-base/lib/typescript/theme/styled-system';
 const Profile = () => {
   //const [show, setShow] = React.useState(false);
