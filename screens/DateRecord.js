@@ -36,7 +36,7 @@ const DateRecord = ({route, props}) => {
  
   const getItemForDate = () => {
     fetch(
-      'http://192.168.1.5:8083/api/daily/getRecordByDate/' +
+      'http://192.168.1.10:8083/api/daily/getRecordByDate/' +
         selectedDate +
         '/1',
     )

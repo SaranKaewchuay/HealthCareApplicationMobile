@@ -87,7 +87,7 @@ const SelectSymptom =({route}) => {
   console.log("CurrentDate")
   console.log(currentDate)
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByImg')
+    fetch('http://192.168.1.10:8083/api/symptom/getSymptomByImg')
       .then(res => res.json())
       .then(result => {
         setItems(result);
@@ -96,7 +96,7 @@ const SelectSymptom =({route}) => {
 
 
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/body/bodytype')
+    fetch('http://192.168.1.10:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
         setTitleCategory(result);
@@ -105,7 +105,7 @@ const SelectSymptom =({route}) => {
 
   const handlePress = id => {
     setActiveButton(id);
-    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByTypeNotImg/' + id)
+    fetch('http://192.168.1.10:8083/api/symptom/getSymptomByTypeNotImg/' + id)
       .then(res => res.json())
       .then(result => {
         setList(result);

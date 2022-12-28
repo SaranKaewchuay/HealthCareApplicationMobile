@@ -8,7 +8,8 @@ import {
   SymptomDetail,
   DiseaseDetail,
   RecordDetail,
-  Search
+  Search,
+  Auth
 } from './screens';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -27,14 +28,14 @@ const App = ({route, navigation}) => {
   //const { title } = route.params;
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Home'}>
-        {/* <Stack.Screen
+      <Stack.Navigator initialRouteName={'Auth'}>
+        <Stack.Screen
           options={{
             headerShown: false,  
           }}
-          name="Login"
-          component={Login}
-        /> */}
+          name="Auth"
+          component={Auth}
+        />
 
         <Stack.Screen
           options={{

@@ -28,7 +28,7 @@ const RecordDetail = ({route}) => {
 
 
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/daily/getRecordById/'+route.params.id)
+    fetch('http://192.168.1.10:8083/api/daily/getRecordById/'+route.params.id)
       .then(res => res.json())
       .then(result => {
         console.log(result);
@@ -47,7 +47,7 @@ const RecordDetail = ({route}) => {
   const handleRecord = async () => {
     
     {items.map(items => (
-        fetch(`http://192.168.1.5:8083/api/daily/edit-record`,{
+        fetch(`http://192.168.1.10:8083/api/daily/edit-record`,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
