@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Alert, } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { images } from '../constants';
 
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000';
 
@@ -23,7 +24,7 @@ const AuthScreen = (props) => {
 
     const onLoggedIn = async () => {
         const token = await getToken();
-        console.log("token ==== > ",token);
+        console.log("token ==== > ", token);
         fetch(`${API_URL}/private`, {
             method: 'GET',
             headers: {
@@ -119,7 +120,14 @@ const AuthScreen = (props) => {
     }
 
     return (
-        <ImageBackground source={require('../src/image/gradient-back.jpeg')} style={styles.image} >
+        <ImageBackground source={require('../src/image/background.jpg')} style={styles.image} >
+            <Image
+                    style={styles.margin1}
+                    size={300}
+                    borderRadius={50}
+                    source={images.logo_healthCare}
+                    alt="logo"
+                />
             <View style={styles.card}>
                 <Text style={styles.heading}>{isLogin ? 'Login' : 'Signup'}</Text>
                 <View style={styles.form}>
@@ -151,7 +159,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         width: '80%',
-        marginTop: '40%',
+        marginTop: '10%',
         borderRadius: 20,
         maxHeight: 380,
         paddingBottom: '30%',
@@ -216,6 +224,13 @@ const styles = StyleSheet.create({
     message: {
         fontSize: 16,
         marginVertical: '5%',
+    },
+    margin1: {
+        width: 150,
+        height: 150,
+        marginTop: 50,
+        marginBottom : 0,
+        padding: 0,
     },
 });
 
