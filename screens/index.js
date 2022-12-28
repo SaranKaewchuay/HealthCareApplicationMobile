@@ -12,6 +12,8 @@ import SymptomDetail from "./SymptomDetail"
 import DiseaseDetail from "./DiseaseDetail"
 import RecordDetail from "./RecordDetail"
 import Search from "./Search"
+import CollectProfile from "./CollectProfile"
+import EditSelectSymptom from "./EditSelectSymptom"
 
 export {
     Login,
@@ -27,5 +29,7 @@ export {
     DiseaseDetail,
     RecordDetail,
     DateRecord,
-    Search
+    Search,
+    CollectProfile,
+    EditSelectSymptom
 };

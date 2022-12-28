@@ -17,7 +17,7 @@ const Category = props => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/body/bodytype')
+    fetch('http://10.200.28.100:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
         console.log(result);
@@ -49,7 +49,7 @@ const Category = props => {
             </Heading>
           </Box>
           <TouchableOpacity onPress={() => goSearch()} style={[styles.center, styles.input]}>
-            <Text style={[{textAlign:"center",marginTop:10}]}>ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด</Text>
+            <Text style={[{textAlign:"center",marginTop:14},styles.text]}>ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด</Text>
 
               {/* <Input
                 style={[styles.center, styles.input]}

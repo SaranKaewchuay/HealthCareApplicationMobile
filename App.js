@@ -8,7 +8,9 @@ import {
   SymptomDetail,
   DiseaseDetail,
   RecordDetail,
-  Search
+  Search,
+  CollectProfile,
+  EditSelectSymptom
 } from './screens';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -38,8 +40,17 @@ const App = ({route, navigation}) => {
 
         <Stack.Screen
           options={{
-            headerShown: false,
-            title: "Search"
+            // headerShown: false,
+            title: 'ค้นหาอาการ',
+            headerStyle: {
+              textAlign: 'center',
+              backgroundColor: '#2585C0',
+            },
+            headerTitleStyle: {
+              color: 'white',
+              alignSelf: 'center',
+              fontWeight: 'bold',
+            },
           }}
           name="Search"
           component={Search}
@@ -58,6 +69,23 @@ const App = ({route, navigation}) => {
           }}
           name="Maps"
           component={Maps}
+        />
+        <Stack.Screen
+          options={{
+            // headerShown: false,
+            title: 'สร้างโปรไฟล์',
+            headerStyle: {
+              textAlign: 'center',
+              backgroundColor: '#2585C0',
+            },
+            headerTitleStyle: {
+              color: 'white',
+              alignSelf: 'center',
+              fontWeight: 'bold',
+            },
+          }}
+          name="CollectProfile"
+          component={CollectProfile}
         />
 
         <Stack.Screen
@@ -143,6 +171,15 @@ const App = ({route, navigation}) => {
           name="TabsDefaultDate"
           component={TabsDefaultDate}
         /> */}
+
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="EditSelectSymptom"
+          component={EditSelectSymptom}
+        />
+
         <Stack.Screen
           name="SelectSymptom"
           component={SelectSymptom}

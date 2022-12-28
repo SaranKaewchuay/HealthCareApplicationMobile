@@ -40,7 +40,7 @@ const Search = () => {
   };
 
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/symptom/symptom')
+    fetch('http://10.200.28.100:8083/api/symptom/symptom')
       .then(response => response.json())
       .then(responseJson => {
         setFilteredDataSource(responseJson.data);
@@ -100,12 +100,13 @@ const Search = () => {
         <TextInput
           style={[
             styles.textInputStyle,
-            {color: 'black', borderRadius: 20, margin: 15},
+            styles.text,
+            {color: 'black', borderRadius: 20, margin: 10, marginTop:30,height:48}
           ]}
           onChangeText={text => searchFilterFunction(text)}
           value={search}
           underlineColorAndroid="transparent"
-          placeholder="Search Here"
+          placeholder="ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด"
         />
         <View style={{padding:20}}>
           <FlatList
@@ -124,6 +125,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#e4f2f3',
+  },
+  text: {
+    fontFamily: 'Mali-Regular',
   },
   itemStyle: {
     padding: 10,

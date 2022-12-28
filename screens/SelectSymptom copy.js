@@ -14,10 +14,6 @@ import {
 
 import {Center, NativeBaseProvider, Input} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:8083' : 'http://10.0.2.2:8083';
-
-
-
 
 const ListItem = ({item, selected, onPress}) => (
   <>
@@ -96,7 +92,7 @@ const SelectSymptom = ({route}) => {
   console.log('CurrentDate');
   console.log(currentDate);
   useEffect(() => {
-    fetch('http://10.200.28.100:8083/api/symptom/getSymptomByImg')
+    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByImg')
       .then(res => res.json())
       .then(result => {
         setItems(result);
@@ -104,7 +100,7 @@ const SelectSymptom = ({route}) => {
   }, []);
 
   useEffect(() => {
-    fetch('http://10.200.28.100:8083/api/body/bodytype')
+    fetch('http://192.168.1.5:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
         setTitleCategory(result);
@@ -113,7 +109,7 @@ const SelectSymptom = ({route}) => {
 
   const handlePress = id => {
     setActiveButton(id);
-    fetch('http://10.200.28.100:8083/api/symptom/getSymptomByTypeNotImg/' + id)
+    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByTypeNotImg/' + id)
       .then(res => res.json())
       .then(result => {
         setList(result);
@@ -156,15 +152,16 @@ const SelectSymptom = ({route}) => {
 
   const handleRecord = async () => {
     console.log('เข้า');
-    fetch(`http://10.200.28.100:8083/api/daily/add-record`, {
+    fetch(`http://192.168.1.5:8083/api/daily/add-record`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
       body: JSON.stringify({
+        // id: idDaily,
         dateRecord: currentDate,
-        dailyDescription: "",
+        dailyDescription: dailyDescription,
         User_id: 1,
       }),
     });
@@ -174,7 +171,7 @@ const SelectSymptom = ({route}) => {
   };
 
   const detail = () => {
-    fetch(`http://10.200.28.100:8083/api/record/add-record`, {
+    fetch(`http://192.168.1.5:8083/api/record/add-record`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

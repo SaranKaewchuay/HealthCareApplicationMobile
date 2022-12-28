@@ -8,7 +8,7 @@ const SymptomDetail = ({route}) => {
   const [items, setItems] = useState([]);
   useEffect(() => {
     fetch(
-      'http://192.168.1.5:8083/api/symptom/getSymptomById/' + route.params.id,
+      'http://10.200.28.100:8083/api/symptom/getSymptomById/' + route.params.id,
     )
       .then(res => res.json())
       .then(result => {
@@ -20,7 +20,7 @@ const SymptomDetail = ({route}) => {
   const [relatedDiseases, setRelatedDiseases] = useState([]);
   useEffect(() => {
     fetch(
-      'http://192.168.1.5:8083/api/symptom/getSymptomByDisease/' + route.params.id,
+      'http://10.200.28.100:8083/api/symptom/getSymptomByDisease/' + route.params.id,
     )
       .then(res => res.json())
       .then(result => {

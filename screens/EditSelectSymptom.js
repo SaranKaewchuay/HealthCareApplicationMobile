@@ -156,15 +156,16 @@ const SelectSymptom = ({route}) => {
 
   const handleRecord = async () => {
     console.log('เข้า');
-    fetch(`http://10.200.28.100:8083/api/daily/add-record`, {
+    fetch(`http://10.200.28.100:8083/api/daily/edit-record`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
       body: JSON.stringify({
+        id: idDaily, 
         dateRecord: currentDate,
-        dailyDescription: "",
+        dailyDescription: dailyDescription,
         User_id: 1,
       }),
     });

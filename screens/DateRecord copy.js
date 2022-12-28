@@ -19,7 +19,7 @@ const DateRecord = ({route, props}) => {
   const [items, setItems] = useState([]);
   const [selectedDate, setSelectedDate] = useState();
   const [id, setID] = useState();
-  const [dailyDescription, setDailyDescription] = useState("");
+  const [dailyDescription, setDailyDescription] = useState([]);
   const [symptom, setSymptom] = useState([]);
   
 
@@ -33,33 +33,17 @@ const DateRecord = ({route, props}) => {
 
   const getItemForDate = () => {
     fetch(
-      'http://10.200.28.100:8083/api/daily/getRecordByDate/' +
+      'http://192.168.1.5:8083/api/daily/getRecordByDate/' +
         selectedDate +
         '/1',
     ).then(res => res.json())
       .then(result => {
         setItems(result.data);
       });
-
-
-      setSymptom(items.map(obj => obj.Symptom_id))
-      {items.slice(0, 1).map((items, index) =>
-        setID(items.DailyRecord_id)
-       
-      )}
-      {items.slice(0, 1).map((items, index) =>
-        setDailyDescription(items.dailyDescription)
-      )}
-
-     
   
-      
+      setSymptom(items.map(obj => obj.Symptom_id))
       console.log("symptom")
       console.log(symptom)
-      console.log("dailyDescription")
-      console.log(dailyDescription)
-      console.log("ID")
-      console.log(id)
   };
 
 
@@ -87,8 +71,6 @@ const DateRecord = ({route, props}) => {
     navigation.navigate('SymptomDetail', {id: id});
   };
 
-
-
   const goRecordDetail = detail => {
     {
       items.map((items, index) =>
@@ -102,10 +84,7 @@ const DateRecord = ({route, props}) => {
   };
 
   const goSelectSymptom = () => {
-    navigation.navigate('SelectSymptom');
-  };
-  const goEditSymptom = (id) => {
-    navigation.navigate('EditSelectSymptom', {date: selectedDate,symptom: symptom,dailyDescription:dailyDescription,id:id});
+    navigation.navigate('SelectSymptom', {date: selectedDate,symptom: symptom});
   };
 
   console.log('ข้อมูลตามวัน');
@@ -162,7 +141,7 @@ const DateRecord = ({route, props}) => {
       ) : (
         <View>
           <View style={{marginLeft: 20, marginRight: 20}}>
-            <TouchableOpacity onPress={() => goEditSymptom()}>
+            <TouchableOpacity onPress={() => goSelectSymptom()}>
               <View style={[styles.todobox, {flexDirection: 'row'}]}>
                 <View style={{flex: 1}}>
                   <Text style={styles.todotext}>
@@ -178,7 +157,7 @@ const DateRecord = ({route, props}) => {
                           fontFamily: 'Mali-Regular',
                           marginLeft: 10,
                         }}>
-                          {items.symptomName + "  "}
+                          {/* {selectItems(items.Symptom_id)} */}
                       </Text>
                     ))}
                   </Text>
@@ -232,7 +211,7 @@ const DateRecord = ({route, props}) => {
                       <Text style={[styles.todotext]}>
                         <Text style={styles.fonts}>
                           {' '}
-                          {items.dailyDescription}    
+                          {items.dailyDescription}
                         </Text>
                       </Text>
                     </View>

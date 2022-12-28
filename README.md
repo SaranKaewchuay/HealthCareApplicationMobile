@@ -18,3 +18,6 @@ npm install @react-native-async-storage/async-storage
 
 # Test
 # TestDew
+
+
+npm install react-native-image-picker --save --legacy-peer-deps

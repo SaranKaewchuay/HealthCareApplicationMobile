@@ -28,7 +28,7 @@ const RecordDetail = ({route}) => {
 
 
   useEffect(() => {
-    fetch('http://192.168.1.5:8083/api/daily/getRecordById/'+route.params.id)
+    fetch('http://10.200.28.100:8083/api/daily/getRecordById/'+route.params.id)
       .then(res => res.json())
       .then(result => {
         console.log(result);
@@ -37,7 +37,7 @@ const RecordDetail = ({route}) => {
   }, []);
   const navigation = useNavigation();
   const goDate = ()=> {
-    navigation.navigate('TabsDefaultDate');
+    navigation.navigate('Date');
   };
 
   
@@ -47,7 +47,7 @@ const RecordDetail = ({route}) => {
   const handleRecord = async () => {
     
     {items.map(items => (
-        fetch(`http://192.168.1.5:8083/api/daily/edit-record`,{
+        fetch(`http://10.200.28.100:8083/api/daily/edit-record`,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -90,9 +90,6 @@ const RecordDetail = ({route}) => {
    
   };
   
-
-
-
   return (
     <NativeBaseProvider>
       <ScrollView style={styles.container}>

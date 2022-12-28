@@ -36,86 +36,84 @@ const Profile = () => {
           <View style={styles.headerbox}>
             <Text style={styles.headertext}>โปรไฟล์ส่วนตัว</Text>
           </View>
-
-          <View>
-            <View style={{alignItems: 'center'}}>
-              <TouchableOpacity onPress={() => goCreateProfile()}>
-                {/* <Image
-                  style={styles.profile_pic}
-                  source={{uri: items.profileImage}}
-                /> */}
-                <Image
-                  style={styles.profile_pic}
-                  source={images_profile.profile_pic}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => goCreateProfile()}>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    marginTop: 10,
-                    fontFamily: 'Mali-Bold',
-                    color: 'white',
-                  }}>
-                  สร้างโปรไฟล์
-                </Text>
-              </TouchableOpacity>
-
-              {items.map(items => (
-                <View>
+          {items.map(items => (
+            <View>
+              <View style={{alignItems: 'center'}}>
+                <TouchableOpacity onPress={() => goCreateProfile()}>
                   <Image
                     style={styles.profile_pic}
-                    source={{uri: items.profileImage}}
+                    source={images_profile.profile_pic}
                   />
+                  {/* <Image
+                  style={styles.profile_pic}
+                  source={{uri:items.profileImage}}
+                /> */}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => goCreateProfile()}>
                   <Text
                     style={{
-                      fontSize: 25,
-                      fontWeight: 'bold',
-                      color: 'black',
-                      paddingTop: 55,
+                      textAlign: 'center',
+                      marginTop: 10,
+                      fontFamily: 'Mali-Bold',
+                      color: 'white',
                     }}>
-                    {items.firstName + '  ' + items.lastName}
+                    สร้างโปรไฟล์
                   </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                      color: 'gray',
-                      padding: 10,
-                    }}>
-                    {items.age}
-                  </Text>
-                  <Text
-                    style={{fontSize: 14, fontWeight: 'bold', color: 'gray'}}>
-                    โรคประจำตัว: {items.conDisease}
-                  </Text>
-                </View>
-              ))}
+                </TouchableOpacity>
+                <Image
+                  style={styles.profile_pic}
+                  source={{uri: items.profileImage}}
+                />
+                <Text
+                  style={{
+                    fontSize: 25,
+                    fontWeight: 'bold',
+                    color: 'black',
+                    paddingTop: 55,
+                  }}>
+                  {items.firstName + '  ' + items.lastName}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    color: 'gray',
+                    padding: 10,
+                  }}>
+                  {items.age}
+                </Text>
+                <Text style={{fontSize: 14, fontWeight: 'bold', color: 'gray'}}>
+                  โรคประจำตัว: {items.conDisease}
+                </Text>
+              </View>
+              <View style={styles.innerbox}>
+                <Image
+                  style={styles.inner_pic}
+                  source={images_profile.birthdate}
+                />
+                <Text style={styles.inner_big_text}>{items.birthdate}</Text>
+              </View>
+              <View style={styles.innerbox}>
+                <Image
+                  style={styles.inner_pic}
+                  source={images_profile.location}
+                />
+                <Text style={styles.inner_big_text}>
+                  น้ำหนัก : {items.weight + '\n'}
+                  ส่วนูสง : {items.height}
+                </Text>
+              </View>
+              <View style={styles.innerbox}>
+                <Image
+                  style={styles.inner_pic}
+                  source={images_profile.contact}
+                />
+                <Text style={styles.inner_big_text}>{items.contact}</Text>
+              </View>
             </View>
-            <View style={styles.innerbox}>
-              <Image
-                style={styles.inner_pic}
-                source={images_profile.birthdate}
-              />
-              <Text style={styles.inner_big_text}>{items.birthdate}</Text>
-            </View>
-            <View style={styles.innerbox}>
-              <Image
-                style={styles.inner_pic}
-                source={images_profile.location}
-              />
-              <Text style={styles.inner_big_text}>
-                น้ำหนัก : {items.weight + '\n'}
-                ส่วนูสง : {items.height}
-              </Text>
-            </View>
-            <View style={styles.innerbox}>
-              <Image style={styles.inner_pic} source={images_profile.contact} />
-              <Text style={styles.inner_big_text}>{items.contact}</Text>
-            </View>
-          </View>
+          ))}
         </View>
       </ScrollView>
     </NativeBaseProvider>
