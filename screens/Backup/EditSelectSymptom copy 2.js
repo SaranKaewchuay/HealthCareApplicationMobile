@@ -14,11 +14,8 @@ import {
 
 import {Center, NativeBaseProvider, Input} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const API_URL =
-  Platform.OS === 'ios' ? 'http://localhost:8083' : 'http://192.168.1.5:5000';
+  Platform.OS === 'ios' ? 'http://localhost:8083' : 'http://10.0.2.2:8083';
 
 const ListItem = ({item, selected, onPress}) => (
   <>
@@ -76,20 +73,19 @@ const SelectSymptom = ({route}) => {
   const [activeButton, setActiveButton] = useState(null);
   const [currentDate, setCurrentDate] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
-  const [dailyDescription, setDailyDescription] = useState('');
-  const [idDaily, setID] = useState();
+  const [dailyID, setDailyID] = useState();
   const getSelected = contact => selectedItems.includes(contact.id);
-  const [userID, setUserID] = useState();
 
   getSelected(66);
 
   useEffect(() => {
     setCurrentDate(route.params.date);
-    if (!route) {
-      setSelectedItems(route.params.symptom);
-      setDailyDescription(route.params.dailyDescription);
-      setID(route.params.id);
-    }
+    setSelectedItems(route.params.symptom);
+    setDailyID(route.params.dailyID);
+    console.log('selectedItems');
+    console.log(selectedItems);
+    console.log(dailyID)
+
   }, []);
 
   console.log('CurrentDate');
@@ -133,73 +129,34 @@ const SelectSymptom = ({route}) => {
     setSelectedItems([...selectedItems, item.id]);
   };
 
+  const showItems = id => {
+    if (selectedItems.includes(id)) {
+      const newListItems = selectedItems.filter(listItem => listItem !== id);
+      return setSelectedItems([...newListItems]);
+    }
+    setSelectedItems([...selectedItems, id]);
+  };
+
   useEffect(() => {
     handlePress(1);
   }, []);
+
+  const [counter, setCounter] = useState(0);
 
   const navigation = useNavigation();
   const goDate = id => {
     navigation.navigate('Date', {date: currentDate});
   };
 
-  const getToken = async () => {
-    try {
-      return await AsyncStorage.getItem('token');
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const handleRecord = async () => {
-    const token = await getToken();
-    console.log('token ==== > ', token);
-    fetch(`${API_URL}/private`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(async res => {
-        try {
-          const jsonRes = await res.json();
-          if (res.status === 200) {
-            console.log('jsonRes.data');
-            console.log(jsonRes.data);
-
-            fetch(`http://192.168.1.5:8083/api/daily/add-record`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-              },
-              body: JSON.stringify({
-                dateRecord: currentDate,
-                dailyDescription: '',
-                User_id: jsonRes.data.id,
-              }),
-            });
-            setTimeout(() => {
-              detail();
-            }, 500);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  const detail = () => {
-    fetch(`http://192.168.1.5:8083/api/record/add-record`, {
+    fetch(`http://192.168.1.5:8083/api/record/edit-record`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
       body: JSON.stringify({
+        DailyRecord_id: selectedItems,
         Symptom_id: selectedItems,
       }),
     })

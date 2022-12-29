@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
+import {useEffect, useState} from 'react';
+import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
 import {
   NativeBaseProvider,
   Center,
@@ -10,15 +10,14 @@ import {
   Text,
   Input,
 } from 'native-base';
-import { images } from '../constants';
-import { useNavigation } from '@react-navigation/native';
+import {images} from '../constants';
+import {useNavigation} from '@react-navigation/native';
 
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000';
-const Category = (props) => {
+const Category = props => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch('http://10.200.28.100:8083/api/body/bodytype')
+    fetch('http://192.168.1.5:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
         console.log(result);
@@ -30,12 +29,11 @@ const Category = (props) => {
 
   const navigation = useNavigation();
   const goCategotyList = id => {
-    navigation.navigate('CategoryList', { id: id });
+    navigation.navigate('CategoryList', {id: id});
   };
   const goSearch = () => {
     navigation.navigate('Search');
   };
-
 
   return (
     <NativeBaseProvider>
@@ -51,8 +49,12 @@ const Category = (props) => {
               HealthCare
             </Heading>
           </Box>
-          <TouchableOpacity onPress={() => goSearch()} style={[styles.center, styles.input]}>
-            <Text style={[{textAlign:"center",marginTop:10}]}>ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด</Text>
+          <TouchableOpacity
+            onPress={() => goSearch()}
+            style={[styles.center, styles.input]}>
+            <Text style={[{textAlign: 'center', marginTop: 10}, styles.mali]}>
+              ค้นหา ปวดหัว ท้องเสีย เป็นหวัด
+            </Text>
 
             {/* <Input
                 style={[styles.center, styles.input]}
@@ -64,7 +66,6 @@ const Category = (props) => {
                 marginTop={1}
                 marginBottom={3}
               /> */}
-
           </TouchableOpacity>
         </Center>
         <Button
@@ -161,31 +162,43 @@ const Category = (props) => {
             </Text>
           </View>
         </Button>
-        <View flexDirection={'row'} height={190}>
+        <View flexDirection={'row'} height={150}>
           <Button
             size="lg"
             borderRadius="12"
             margin={2}
             bg="lightBlue.700"
-            width={180}
+            width={'370'}
             marginTop={'0'}
             onPress={() => goCategotyList(4)}>
             <Center>
-              <View>
+              <View style={{flexDirection:"row"}}>
+                <Image
+                  width={120}
+                  height={120}
+                  marginRight={8}
+                  source={{
+                    uri: 'https://cdn-icons-png.flaticon.com/512/1176/1176354.png',
+                  }}
+                  alt="Alternate Text"
+                  alignSelf={'flex-start'}
+                />
                 <Text
                   fontSize={29}
                   paddingTop={5}
                   color="white"
                   style={styles.text}>
-                  ทั่วไป
-                </Text>
-                <Text color="white" style={styles.text}>
+                  ทั่วไป {'\n'}
+                  <Text fontSize={18} color="white" style={styles.text}>
                   ไข้หวัด ผิวหนัง ฯลฯ
                 </Text>
+                
+                </Text>
+                
               </View>
             </Center>
           </Button>
-          <Button
+          {/* <Button
             size="lg"
             borderRadius="12"
             margin={2}
@@ -198,7 +211,7 @@ const Category = (props) => {
             <Text color="white" fontSize={26} style={styles.text}>
               โรงพยาบาล
             </Text>
-          </Button>
+          </Button> */}
         </View>
       </ScrollView>
     </NativeBaseProvider>
@@ -206,6 +219,10 @@ const Category = (props) => {
 };
 
 const styles = StyleSheet.create({
+  mali: {
+    fontFamily: 'Mali-Regular',
+    marginTop: 12,
+  },
   container: {
     flex: 1,
     backgroundColor: '#e4f2f3',
@@ -224,7 +241,19 @@ const styles = StyleSheet.create({
     width: 350,
     borderRadius: 50,
     height: 45,
-    backgroundColor: "#a8deff"
+    borderWidth: 2,
+    borderColor: '#0E88D7',
+    backgroundColor: 'white',
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   center: {
     textAlign: 'auto',

@@ -14,7 +14,6 @@ import {
 
 import {Center, NativeBaseProvider, Input} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:8083' : 'http://10.0.2.2:8083';
 
 
 
@@ -56,7 +55,6 @@ const ListItemIcon = ({item, selected, onPress}) => (
 
           <Text
             style={{color: 'black', marginTop: 5, fontFamily: 'Mali-Regular'}}>
-            {/* {item.typeTitle} */}
             {item.symptomName}
           </Text>
         </Center>
@@ -87,16 +85,17 @@ const SelectSymptom = ({route}) => {
     setSelectedItems(route.params.symptom)
     setDailyDescription(route.params.dailyDescription)
     setID(route.params.id)
-    console.log("selectedItems")
-    console.log(selectedItems)
-    console.log(dailyDescription)
-    console.log(idDaily)
+
   }, []);
 
   console.log('CurrentDate');
   console.log(currentDate);
+  console.log("selectedItems")
+  console.log(selectedItems)
+  console.log(dailyDescription)
+  console.log(idDaily)
   useEffect(() => {
-    fetch('http://10.200.28.100:8083/api/symptom/getSymptomByImg')
+    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByImg')
       .then(res => res.json())
       .then(result => {
         setItems(result);
@@ -104,7 +103,7 @@ const SelectSymptom = ({route}) => {
   }, []);
 
   useEffect(() => {
-    fetch('http://10.200.28.100:8083/api/body/bodytype')
+    fetch('http://192.168.1.5:8083/api/body/bodytype')
       .then(res => res.json())
       .then(result => {
         setTitleCategory(result);
@@ -113,7 +112,7 @@ const SelectSymptom = ({route}) => {
 
   const handlePress = id => {
     setActiveButton(id);
-    fetch('http://10.200.28.100:8083/api/symptom/getSymptomByTypeNotImg/' + id)
+    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByTypeNotImg/' + id)
       .then(res => res.json())
       .then(result => {
         setList(result);
@@ -134,48 +133,19 @@ const SelectSymptom = ({route}) => {
     setSelectedItems([...selectedItems, item.id]);
   };
 
-  const showItems = id => {
-    if (selectedItems.includes(id)) {
-      const newListItems = selectedItems.filter(listItem => listItem !== id);
-      return setSelectedItems([...newListItems]);
-    }
-    setSelectedItems([...selectedItems, id]);
-    
-  };
 
   useEffect(() => {
     handlePress(1);
   }, []);
 
-  const [counter, setCounter] = useState(0);
 
   const navigation = useNavigation();
-  const goDate = id => {
+  const goDate = () => {
     navigation.navigate('Date', {date: currentDate});
   };
 
   const handleRecord = async () => {
-    console.log('เข้า');
-    fetch(`http://10.200.28.100:8083/api/daily/edit-record`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        id: idDaily, 
-        dateRecord: currentDate,
-        dailyDescription: dailyDescription,
-        User_id: 1,
-      }),
-    });
-    setTimeout(() => {
-      detail();
-    }, 500);
-  };
-
-  const detail = () => {
-    fetch(`http://10.200.28.100:8083/api/record/add-record`, {
+    fetch(`http://192.168.1.5:8083/api/record/edit-record`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -183,11 +153,12 @@ const SelectSymptom = ({route}) => {
       },
       body: JSON.stringify({
         Symptom_id: selectedItems,
+        DailyRecord_id: idDaily,
       }),
     })
       .then(response => response.json())
-      .then(data => {
-        if (!data.error) {
+      .then(res => {
+        if (!res.error) {
           Alert.alert('สำเร็จ', 'บันทึกอาการสำเร็จ', [
             {
               text: 'ยกเลิก',

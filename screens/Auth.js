@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { images } from '../constants';
 
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000';
+const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://192.168.1.5:5000';
 
 const AuthScreen = (props) => {
 
@@ -37,7 +37,8 @@ const AuthScreen = (props) => {
                     const jsonRes = await res.json();
                     if (res.status === 200) {
                         setmailToken(jsonRes.data);
-                        console.log(jsonRes);
+
+                        
                         setMessage(jsonRes.message);
                     }
                 } catch (err) {
@@ -106,9 +107,28 @@ const AuthScreen = (props) => {
         }
     }
 
+    const storeID = async (id) => {
+        try {
+            const id = await AsyncStorage.setItem('id', id)
+            console.log("id")
+            console.log(id)
+        } catch (e) {
+            console.log("error");
+            console.log(e);
+        }
+    }
+
     const getToken = async () => {
         try {
             return await AsyncStorage.getItem('token')
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const getID = async () => {
+        try {
+            return await AsyncStorage.getItem('id')
         } catch (e) {
             console.log(e);
         }

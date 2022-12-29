@@ -13,8 +13,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeBaseProvider } from 'native-base';
 
-const var_dump = require('var_dump')
-
 const ListItem = ({ item, selected, onPress, onLongPress }) => (
   <>
     <TouchableOpacity
@@ -32,7 +30,7 @@ const CategoryList = ({ route }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch('http://10.200.28.100:8083/api/symptom/getSymptomByType/' + route.params.id)
+    fetch('http://192.168.1.5:8083/api/symptom/getSymptomByType/' + route.params.id)
       .then(res => res.json())
       .then(result => {
         console.log(result);

@@ -10,7 +10,8 @@ import {
   RecordDetail,
   Search,
   CollectProfile,
-  EditSelectSymptom
+  EditSelectSymptom,
+  Auth
 } from './screens';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -29,7 +30,7 @@ const App = ({route, navigation}) => {
   //const { title } = route.params;
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Auth'}>
+      <Stack.Navigator initialRouteName={"Auth"}>
         <Stack.Screen
           options={{
             headerShown: false,  
@@ -65,7 +66,7 @@ const App = ({route, navigation}) => {
 
         <Stack.Screen
           options={{
-            headerShown: false,
+            title:"โรงพยาบาล"
           }}
           name="Maps"
           component={Maps}
@@ -92,7 +93,7 @@ const App = ({route, navigation}) => {
           name="SymptomDetail"
           component={SymptomDetail}
           options={{
-            title: 'ศรีษะ หู ตา คอ จมูก ปาก',
+            title: 'คำแนะนำอาการ',
             headerStyle: {
               textAlign: 'center',
               backgroundColor: '#2585C0',
@@ -109,7 +110,7 @@ const App = ({route, navigation}) => {
           name="DiseaseDetail"
           component={DiseaseDetail}
           options={{
-            title: 'ศรีษะ หู ตา คอ จมูก ปาก',
+            title: 'คำแนะนำโรค',
             headerStyle: {
               textAlign: 'center',
               backgroundColor: '#2585C0',
@@ -126,7 +127,7 @@ const App = ({route, navigation}) => {
           name="CategoryList"
           component={CategoryList}
           options={{
-            title: 'ศรีษะ หู ตา คอ จมูก ปาก',
+            title: 'อาการ',
             headerStyle: {
               textAlign: 'center',
               backgroundColor: '#2585C0',

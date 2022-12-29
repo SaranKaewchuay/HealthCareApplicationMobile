@@ -20,14 +20,20 @@ const Profile = () => {
     navigation.navigate('CollectProfile');
   };
   const [items, setItems] = useState([]);
+
+  const [localImage, setImage] = useState();
   useEffect(() => {
-    fetch('http://10.200.28.100:8083/api/profile/getProfileById/1')
+    fetch('http://192.168.1.5:8083/api/profile/getProfileById/29')
       .then(res => res.json())
       .then(result => {
         console.log(result.data);
         setItems(result.data);
       });
   }, []);
+
+  // {items.map(items => (
+  //   setImage(require(items.profileImage))
+  // ))}
 
   return (
     <NativeBaseProvider>
@@ -44,6 +50,7 @@ const Profile = () => {
                   style={styles.profile_pic}
                   source={{uri: items.profileImage}}
                 /> */}
+
                 <Image
                   style={styles.profile_pic}
                   source={images_profile.profile_pic}
@@ -63,36 +70,52 @@ const Profile = () => {
                 </Text>
               </TouchableOpacity>
 
-              {items.map(items => (
-                <View>
-                  <Image
+              {items.map(
+                items => (
+                  console.log('items.profileImage'),
+                  console.log(items.profileImage),
+                  (
+                    <View>
+                     { items && <Image
+                        style={styles.imageStyle}
+                        source={{uri: items.profileImage}}
+                      />}
+                      {console.log(items.profileImage)}
+
+                      {/* <Image
                     style={styles.profile_pic}
                     source={{uri: items.profileImage}}
-                  />
-                  <Text
-                    style={{
-                      fontSize: 25,
-                      fontWeight: 'bold',
-                      color: 'black',
-                      paddingTop: 55,
-                    }}>
-                    {items.firstName + '  ' + items.lastName}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                      color: 'gray',
-                      padding: 10,
-                    }}>
-                    {items.age}
-                  </Text>
-                  <Text
-                    style={{fontSize: 14, fontWeight: 'bold', color: 'gray'}}>
-                    โรคประจำตัว: {items.conDisease}
-                  </Text>
-                </View>
-              ))}
+                  /> */}
+                      <Text
+                        style={{
+                          fontSize: 25,
+                          fontWeight: 'bold',
+                          color: 'black',
+                          paddingTop: 55,
+                        }}>
+                        {items.firstName + '  ' + items.lastName}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          fontWeight: 'bold',
+                          color: 'gray',
+                          padding: 10,
+                        }}>
+                        {items.age}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          fontWeight: 'bold',
+                          color: 'gray',
+                        }}>
+                        โรคประจำตัว: {items.conDisease}
+                      </Text>
+                    </View>
+                  )
+                ),
+              )}
             </View>
             <View style={styles.innerbox}>
               <Image
@@ -189,6 +212,12 @@ const styles = StyleSheet.create({
   inner_pic: {
     width: 30,
     height: 30,
+  },
+  imageStyle: {
+    height: 150,
+    width: 150,
+    marginTop: 20,
+    borderRadius: 5,
   },
 });
 export default Profile;

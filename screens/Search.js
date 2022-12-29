@@ -40,7 +40,7 @@ const Search = () => {
   };
 
   useEffect(() => {
-    fetch('http://10.200.28.100:8083/api/symptom/symptom')
+    fetch('http://192.168.1.5:8083/api/symptom/symptom')
       .then(response => response.json())
       .then(responseJson => {
         setFilteredDataSource(responseJson.data);

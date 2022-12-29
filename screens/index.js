@@ -1,5 +1,4 @@
 import Home from "./Home"
-import MovieDetail from "./MovieDetail"
 import Login  from "./Login"
 import Signup  from "./Signup"
 import Category from "./Category"
@@ -14,12 +13,12 @@ import RecordDetail from "./RecordDetail"
 import Search from "./Search"
 import CollectProfile from "./CollectProfile"
 import EditSelectSymptom from "./EditSelectSymptom"
+import Auth from "./Auth"
 
 export {
     Login,
     Signup ,
     Home,
-    MovieDetail,
     Category,
     SelectSymptom,
     CategoryList,
@@ -31,5 +30,6 @@ export {
     DateRecord,
     Search,
     CollectProfile,
-    EditSelectSymptom
+    EditSelectSymptom,
+    Auth
 };

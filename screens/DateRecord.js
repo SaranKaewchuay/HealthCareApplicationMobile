@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
+  Alert,
 } from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {useNavigation} from '@react-navigation/native';
@@ -14,60 +15,118 @@ import {useNavigation} from '@react-navigation/native';
 import {images} from '../constants';
 import {TabIcon} from '../components';
 import {icons} from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {NavigationContainer, useIsFocused} from '@react-navigation/native';
+const API_URL =
+  Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://192.168.1.5:5000';
 
 const DateRecord = ({route, props}) => {
   const [items, setItems] = useState([]);
   const [selectedDate, setSelectedDate] = useState();
-  const [id, setID] = useState();
-  const [dailyDescription, setDailyDescription] = useState("");
+  const [dailyId, setID] = useState();
+  const [dailyDescription, setDailyDescription] = useState('');
   const [symptom, setSymptom] = useState([]);
-  
+  const [mailToken, setmailToken] = useState();
+  const [userID, setUserID] = useState();
+  const [userName, setUserName] = useState('');
+
+  const isFocused = useIsFocused();
+  const goDate = id => {
+    navigation.navigate('Date', {date: selectedDate});
+  };
 
   useEffect(() => {
     if (!route) {
       setSelectedDate(route.params.date);
     }
-  }, []);
+  }, [isFocused]);
 
-  console.log(selectedDate);
-
-  const getItemForDate = () => {
-    fetch(
-      'http://10.200.28.100:8083/api/daily/getRecordByDate/' +
-        selectedDate +
-        '/1',
-    ).then(res => res.json())
-      .then(result => {
-        setItems(result.data);
-      });
-
-
-      setSymptom(items.map(obj => obj.Symptom_id))
-      {items.slice(0, 1).map((items, index) =>
-        setID(items.DailyRecord_id)
-       
-      )}
-      {items.slice(0, 1).map((items, index) =>
-        setDailyDescription(items.dailyDescription)
-      )}
-
-     
-  
-      
-      console.log("symptom")
-      console.log(symptom)
-      console.log("dailyDescription")
-      console.log(dailyDescription)
-      console.log("ID")
-      console.log(id)
+  const getToken = async () => {
+    try {
+      return await AsyncStorage.getItem('token');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
+  const getItemForDate = async data => {
+    const token = await getToken();
+    console.log('token ==== > ', token);
+    fetch(`${API_URL}/private`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(async res => {
+        try {
+          const jsonRes = await res.json();
+          if (res.status === 200) {
+            setUserID(jsonRes.data.id);
+            setUserName(jsonRes.data.name);
+            console.log(selectedDate);
+            fetch(
+              'http://192.168.1.5:8083/api/daily/getRecordByDate/' +
+                selectedDate +
+                '/' +
+                jsonRes.data.id,
+            )
+              .then(res => res.json())
+              .then(result => {
+                setItems(result.data);
+              });
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
+    setSymptom(items.map(obj => obj.Symptom_id));
+    {
+      items.slice(0, 1).map((items, index) => setID(items.DailyRecord_id));
+    }
+    {
+      items
+        .slice(0, 1)
+        .map((items, index) => setDailyDescription(items.dailyDescription));
+    }
+  };
 
+  const deleteItem = () => {
+    Alert.alert('ลบรายการ', 'คุณแน่ใจไหมว่าต้องการลบ', [
+      {
+        text: 'ยกเลิก',
+      },
+      {
+        text: 'ตกลง',
+        onPress: () => deleteDaily(),
+      },
+    ]);
+  };
 
-  console.log('dailyDescription');
-  console.log(dailyDescription);
-
+  const deleteDaily = () => {
+    fetch('http://192.168.1.5:8083/api/daily/delete-Record/' + dailyId)
+      .then(response => response.json())
+      .then(data => {
+        if (!data.error) {
+          Alert.alert('สำเร็จ', 'ลบรายการสำเร็จ', [
+            {
+              text: 'ตกลง',
+              onPress: () => goDate(),
+            },
+          ]);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        Alert.alert('invalid data');
+      });
+  };
   const ListItem = ({item}) => (
     <>
       <TouchableOpacity
@@ -87,8 +146,6 @@ const DateRecord = ({route, props}) => {
     navigation.navigate('SymptomDetail', {id: id});
   };
 
-
-
   const goRecordDetail = detail => {
     {
       items.map((items, index) =>
@@ -102,25 +159,32 @@ const DateRecord = ({route, props}) => {
   };
 
   const goSelectSymptom = () => {
-    navigation.navigate('SelectSymptom');
+    navigation.navigate('SelectSymptom', {date: selectedDate});
   };
-  const goEditSymptom = (id) => {
-    navigation.navigate('EditSelectSymptom', {date: selectedDate,symptom: symptom,dailyDescription:dailyDescription,id:id});
+  const goEditSymptom = id => {
+    navigation.navigate('EditSelectSymptom', {
+      date: selectedDate,
+      symptom: symptom,
+      dailyDescription: dailyDescription,
+      id: dailyId,
+    });
   };
-
-  console.log('ข้อมูลตามวัน');
-  console.log(items);
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerbox}>
-        <Text style={styles.headertext}>บันทึกสุขภาพ</Text>
+        <Text style={[styles.headertext, styles.mali]}>บันทึกสุขภาพ</Text>
       </View>
-
+      <Text style={[{textAlign: 'center', fontSize: 25},styles.name]}>
+        สวัสดีคุณ {userName}{' '}
+      </Text>
       <View style={[styles.carlendar, styles.shadow]}>
         <Calendar
           markedDates={{
             [selectedDate]: {selected: true},
+            // ["2022-12-02"]: { marked: true, dotColor: 'green' },
+            // ["2022-12-05"]: { marked: true, dotColor: 'red' },
+            // ["2022-12-21"]: { marked: true, dotColor: 'red' }
           }}
           onDayPress={day => {
             {
@@ -132,7 +196,7 @@ const DateRecord = ({route, props}) => {
 
       {items === null || items.length === 0 ? (
         <View>
-          <TouchableOpacity>
+          <View>
             <View style={styles.todobox}>
               <Text style={styles.todotext}>
                 <Text style={{fontSize: 18}}>
@@ -142,19 +206,13 @@ const DateRecord = ({route, props}) => {
                 <Text style={{fontSize: 18}}>ยังไม่บันทึก</Text>
               </Text>
             </View>
-          </TouchableOpacity>
+          </View>
 
           <View style={[styles.row, styles.emoposition]}>
-            <TouchableOpacity>
-              <Image style={styles.emotion} source={images.happy} />
-              <View style={styles.questionBox}>
-                <Text style={styles.question}>สบายดี</Text>
-              </View>
-            </TouchableOpacity>
             <TouchableOpacity onPress={() => goSelectSymptom()}>
               <Image style={styles.emotion} source={images.bad} />
               <View style={styles.questionBox}>
-                <Text style={styles.question}>ไม่สบาย</Text>
+                <Text style={styles.question}>บันทึกอาการ</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -162,7 +220,9 @@ const DateRecord = ({route, props}) => {
       ) : (
         <View>
           <View style={{marginLeft: 20, marginRight: 20}}>
-            <TouchableOpacity onPress={() => goEditSymptom()}>
+            {/* {userID && <Text>{userID.id}</Text>} */}
+
+            <View>
               <View style={[styles.todobox, {flexDirection: 'row'}]}>
                 <View style={{flex: 1}}>
                   <Text style={styles.todotext}>
@@ -171,23 +231,33 @@ const DateRecord = ({route, props}) => {
                       {'\n'}
                     </Text>
                     {items.map((items, index) => (
-                    
                       <Text
                         style={{
                           color: 'black',
                           fontFamily: 'Mali-Regular',
                           marginLeft: 10,
                         }}>
-                          {items.symptomName + "  "}
+                        {items.symptomName + '  '}
                       </Text>
                     ))}
                   </Text>
                 </View>
-                <View style={{flex: 0.08}}>
-                  <TabIcon icon={icons.edit} />
-                </View>
               </View>
-            </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}>
+              <TouchableOpacity onPress={() => goEditSymptom()}>
+                <TabIcon icon={icons.edit} style={styles.edit} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => deleteItem()}>
+                <TabIcon icon={icons.deleteIcon} />
+              </TouchableOpacity>
+            </View>
+
             <Text style={styles.font}>อาการ</Text>
             <FlatList
               style={styles.marginTop}
@@ -202,7 +272,7 @@ const DateRecord = ({route, props}) => {
       {items.slice(0, 1).map((items, index) =>
         items.dailyDescription === null ||
         items.dailyDescription.length === 0 ? (
-          <View>
+          <View style={{padding: 20}}>
             <TouchableOpacity
               style={styles.list}
               onPress={() => goRecordDetail()}>
@@ -232,7 +302,7 @@ const DateRecord = ({route, props}) => {
                       <Text style={[styles.todotext]}>
                         <Text style={styles.fonts}>
                           {' '}
-                          {items.dailyDescription}    
+                          {items.dailyDescription}
                         </Text>
                       </Text>
                     </View>
@@ -251,6 +321,15 @@ const DateRecord = ({route, props}) => {
 };
 
 const styles = StyleSheet.create({
+  mali: {
+    fontFamily: 'Mali-Regular',
+  },
+  edit: {
+    backgroundColor: 'yellow',
+    width: '50%',
+    height: '150%',
+    borderRadius: 30,
+  },
   font: {
     color: 'black',
     paddingLeft: 20,
@@ -271,6 +350,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#2585C0',
     elevation: 20,
     shadowColor: '#52006A',
+  },
+  name: {
+    height: 65,
+    backgroundColor: 'white',
+    elevation: 20,
+    elevation: 5,
+    shadowColor: '#000',
+    paddingTop:8,
+    fontFamily:"Mali-Regular",
+    color:"black"
   },
   headertext: {
     fontSize: 18.5,
@@ -389,7 +478,7 @@ const styles = StyleSheet.create({
     margingBottom: 20,
     width: 75,
     height: 75,
-    marginLeft: '20%',
+    marginLeft: '26%',
   },
   emoposition: {
     justifyContent: 'center',

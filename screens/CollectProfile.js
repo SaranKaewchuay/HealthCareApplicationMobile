@@ -80,7 +80,7 @@ const CollectProfile = () => {
 
   const handleCreate = async () => {
     const response = await fetch(
-      `http://10.200.28.100:8083/api/profile/add-profile`,
+      `http://192.168.1.5:8083/api/profile/add-profile`,
       {
         method: 'POST',
         headers: {
@@ -97,7 +97,7 @@ const CollectProfile = () => {
           contact: contact,
           weight: userWeidth,
           height: userHeight,
-          User_id: 1,
+          User_id: 29,
         }),
       },
     )
@@ -197,6 +197,8 @@ const CollectProfile = () => {
                 />
               ) : (
                 <Image style={styles.imageStyle} source={{uri: photo}} />
+
+              
               )}
 
               <TouchableOpacity onPress={openCamera} style={styles.button}>
@@ -205,7 +207,8 @@ const CollectProfile = () => {
               <TouchableOpacity onPress={openGallery} style={styles.button}>
                 <Text style={styles.buttonText}>Open Gallery</Text>
               </TouchableOpacity>
-
+              {console.log("photo")}
+              {console.log(photo)}
               <TouchableOpacity
                 style={[styles.button, {backgroundColor: 'green'}]}
                 onPress={handleCreate}>

@@ -8,6 +8,9 @@ const upload = require("../assets/icons/upload.png");
 const stethoscope = require("../assets/icons/stethoscope.png");
 const calendar = require("../assets/icons/calendar.png");
 const edit = require("../assets/icons/editing.png");
+const deleteIcon = require("../assets/icons/delete.png");
+const hospital  = require("../assets/icons/hospital.png") 
+const location  = require("../assets/icons/location.png") 
 
 export default {
     home,
@@ -19,5 +22,8 @@ export default {
     upload,
     stethoscope,
     calendar,
-    edit 
+    edit ,
+    deleteIcon,
+    hospital,
+    location
 }
