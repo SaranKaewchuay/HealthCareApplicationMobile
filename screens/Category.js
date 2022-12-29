@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView,TouchableOpacity} from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
 import {
   NativeBaseProvider,
   Center,
@@ -10,10 +10,11 @@ import {
   Text,
   Input,
 } from 'native-base';
-import {images} from '../constants';
-import {useNavigation} from '@react-navigation/native';
+import { images } from '../constants';
+import { useNavigation } from '@react-navigation/native';
 
-const Category = props => {
+const API_URL = Platform.OS === 'ios' ? 'http://localhost:5000' : 'http://10.0.2.2:5000';
+const Category = (props) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -29,11 +30,13 @@ const Category = props => {
 
   const navigation = useNavigation();
   const goCategotyList = id => {
-    navigation.navigate('CategoryList', {id: id});
+    navigation.navigate('CategoryList', { id: id });
   };
   const goSearch = () => {
     navigation.navigate('Search');
   };
+
+
   return (
     <NativeBaseProvider>
       <ScrollView style={styles.container}>
@@ -49,9 +52,9 @@ const Category = props => {
             </Heading>
           </Box>
           <TouchableOpacity onPress={() => goSearch()} style={[styles.center, styles.input]}>
-            <Text style={[{textAlign:"center",marginTop:14},styles.text]}>ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด</Text>
+            <Text style={[{textAlign:"center",marginTop:10}]}>ค้นหา  ปวดหัว ท้องเสีย เป็นหวัด</Text>
 
-              {/* <Input
+            {/* <Input
                 style={[styles.center, styles.input]}
                 size="1"
                 variant="rounded"
@@ -219,9 +222,9 @@ const styles = StyleSheet.create({
   },
   input: {
     width: 350,
-    borderRadius:50,
+    borderRadius: 50,
     height: 45,
-    backgroundColor:"#a8deff"
+    backgroundColor: "#a8deff"
   },
   center: {
     textAlign: 'auto',

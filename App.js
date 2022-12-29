@@ -29,14 +29,14 @@ const App = ({route, navigation}) => {
   //const { title } = route.params;
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Home'}>
-        {/* <Stack.Screen
+      <Stack.Navigator initialRouteName={'Auth'}>
+        <Stack.Screen
           options={{
             headerShown: false,  
           }}
-          name="Login"
-          component={Login}
-        /> */}
+          name="Auth"
+          component={Auth}
+        />
 
         <Stack.Screen
           options={{
