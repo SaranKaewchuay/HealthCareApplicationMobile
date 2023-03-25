@@ -1,6 +1,5 @@
 # HealthCareApp
 # Project Mobile application for SWE62-308 Mobile Device Application Development 2/2022 
-# 
 
 # npm i
 # npm install @react-navigation/native
@@ -15,9 +14,4 @@ npm install react-native-linear-gradient --save
 npm install react-native-calendars
 
 npm install @react-native-async-storage/async-storage
-
-# Test
-# TestDew
-
-
 npm install react-native-image-picker --save --legacy-peer-deps
